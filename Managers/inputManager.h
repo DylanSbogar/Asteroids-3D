@@ -21,13 +21,6 @@
 
 #define KEY_ESC 27
 
-typedef struct {
-    bool movingForward;
-    bool turningLeft;
-    bool turningRight;
-    bool restartGame;
-} keyHandler;
-
 void onKeyPress(unsigned char key, int x, int y);
 
 void onKeyUp(unsigned char key, int x, int y);
