@@ -21,11 +21,6 @@ void onDisplay() {
     glEnable(GL_DEPTH_TEST);
 
     //TODO: Put draw methods here.
-    glTranslatef(0.0, 0.0, 0.0);
-    glPushMatrix();
-    glScalef(10.0, 10.0, 10.0);
-    glutWireCube(1.0);
-    glPopMatrix();
 
     glutSwapBuffers();
     int err;
