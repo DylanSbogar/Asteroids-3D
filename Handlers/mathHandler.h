@@ -1,7 +1,7 @@
 #ifndef MATH_HANDLER_H
 #define MATH_HANDLER_H
 
-#include "mathHandler.h"
+#include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
@@ -39,6 +39,16 @@ static inline vec3d directionBetweenPoints(vec3d source, vec3d target) {
     result.x = target.x - source.x;
     result.y = target.y - source.y;
     result.z = target.z - source.z;
+
+    return result;
+}
+
+static inline vec3d vec3dAddition(vec3d vec, vec3d vec2) {
+    vec3d result;
+
+    result.x = vec.x + vec2.x;
+    result.y = vec.y + vec2.y;
+    result.z = vec.z + vec2.z;
 
     return result;
 }

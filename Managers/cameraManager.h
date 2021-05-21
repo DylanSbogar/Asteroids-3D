@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "../Handlers/mathHandler.h"
+#include "../GameObjects/ship.h"
 
 #if _WIN32
 #include <windows.h>
@@ -32,10 +33,10 @@ typedef struct {
     bool warpedCursor;
 } camera;
 
-void initCamera(camera *cam);
+void initCamera(camera *camera);
 
-void placeCamera(camera *cam);
+void placeCamera(camera *camera);
 
-void updateCameraPosition();
+void updateCameraPosition(camera *camera, ship *ship);
 
 #endif //CAMERA_MANAGER_H

@@ -18,4 +18,15 @@
 #include <GL/glut.h>
 #endif
 
+typedef struct {
+    // wallXpos
+    // wallXneg
+    // wallYpos
+    // wallYneg
+    // wallZpos
+    // wallZneg
+} arena;
+
+void drawAxes();
+
 #endif //ARENA_H

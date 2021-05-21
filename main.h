@@ -5,8 +5,9 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+#include "CoreGraphics/CoreGraphics.h"
 #include "Managers/cameraManager.h"
-#include "Managers/inputManager.h"
+#include "GameObjects/arena.h"
 
 #if _WIN32
 #include <windows.h>
@@ -21,6 +22,10 @@
 #include <GL/glut.h>
 #endif
 
+#define KEY_ESC 27
+
+
+
 int main(int argc, char **argv);
 
 void initGame();
@@ -32,5 +37,13 @@ void onDisplay();
 void onIdle();
 
 void updateGameState();
+
+void onKeyPress(unsigned char key, int x, int y);
+
+void onKeyUp(unsigned char key, int x, int y);
+
+void onMousePress(int state, int button, int x, int y);
+
+void onMouseMove(int x, int y);
 
 #endif //MAIN_H
