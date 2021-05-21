@@ -1,29 +1,38 @@
 #include "arena.h"
 
-
+float wallNormal[] = {0.3, 0.3, 0.3};
+float wallWarning[] = {0.3, 0.0, 0.0};
 
 void drawAxes() {
+    glPushMatrix();
+    glScalef(ARENA_RADIUS, ARENA_RADIUS, ARENA_RADIUS);
     glBegin(GL_LINES);
         glColor3f(1.0, 0.0, 0.0);
-        glVertex3f(-10.0, 0.0, 0.0);
-        glVertex3f(10.0, 0.0, 0.0);
+        glVertex3f(-1.0, 0.0, 0.0);
+        glVertex3f(1.0, 0.0, 0.0);
 
         glColor3f(0.0, 1.0, 0.0);
-        glVertex3f(0.0, -10.0, 0.0);
-        glVertex3f(0.0, 10.0, 0.0);
+        glVertex3f(0.0, -1.0, 0.0);
+        glVertex3f(0.0, 1.0, 0.0);
 
         glColor3f(0.0, 0.0, 1.0);
-        glVertex3f(0.0, 0.0, -10.0);
-        glVertex3f(0.0, 0.0, 10.0);
+        glVertex3f(0.0, 0.0, -1.0);
+        glVertex3f(0.0, 0.0, 1.0);
     glEnd();
+    glPopMatrix();
+}
+
+void initWall(wall *wall) {
+
 }
 
 void drawWall(wall *wall) {
-    glColor3f(1.0, 1.0, 1.0);
-    glPushMatrix();
-        glTranslatef(wall->x, wall->y, wall->z);
-        if(wall->x != 0.0) glRotatef(90.0, 0.0, 1.0, 0.0);
-        if(wall->y != 0.0) glRotatef(270.0, 1.0, 0.0, 0.0);
+    glColor3f(0.3, 0.3, 0.3);
+    // glColor3f(0.3, 0.0, 0.0);
+    glPushMatrix(); 
+        glTranslatef(wall->pos.x, wall->pos.y, wall->pos.z);
+        if(wall->pos.x != 0.0) glRotatef(90.0, 0.0, 1.0, 0.0);
+        if(wall->pos.y != 0.0) glRotatef(270.0, 1.0, 0.0, 0.0);
         glScalef(ARENA_RADIUS, ARENA_RADIUS, ARENA_RADIUS);
         glBegin(GL_LINES);
             float pos = -1.0;
@@ -38,40 +47,33 @@ void drawWall(wall *wall) {
 }
 
 void drawArena() {
+    // Set up co-ordinates for the wall at X+ and draw.
     wall wallXPos;
-    wallXPos.x = ARENA_RADIUS;
-    wallXPos.y = 0;
-    wallXPos.z = 0;
-
-    wall wallXNeg;
-    wallXNeg.x = -ARENA_RADIUS;
-    wallXNeg.y = 0;
-    wallXNeg.z = 0;
-
-    wall wallYPos;
-    wallYPos.x = 0;
-    wallYPos.y = ARENA_RADIUS;
-    wallYPos.z = 0;
-
-    wall wallYNeg;
-    wallYNeg.x = 0;
-    wallYNeg.y = -ARENA_RADIUS;
-    wallYNeg.z = 0;
-
-    wall wallZPos;
-    wallZPos.x = 0;
-    wallZPos.y = 0;
-    wallZPos.z = ARENA_RADIUS;
-
-    wall wallZNeg;
-    wallZNeg.x = 0;
-    wallZNeg.y = 0;
-    wallZNeg.z = -ARENA_RADIUS;
-
+    wallXPos.pos = (vec3d) {ARENA_RADIUS,0,0};
     drawWall(&wallXPos);
+
+    // Set up co-ordinates for the wall at X- and draw.
+    wall wallXNeg;
+    wallXNeg.pos = (vec3d) {-ARENA_RADIUS, 0, 0};
     drawWall(&wallXNeg);
+
+    // Set up co-ordinates for the wall at Y+ and draw.
+    wall wallYPos;
+    wallYPos.pos = (vec3d) {0, ARENA_RADIUS, 0};
     drawWall(&wallYPos);
+
+    // Set up co-ordinates for the wall at Y- and draw.
+    wall wallYNeg;
+    wallYNeg.pos = (vec3d) {0, -ARENA_RADIUS, 0};
     drawWall(&wallYNeg);
+
+    // Set up co-ordinates for the wall at Z+ and draw.
+    wall wallZPos;
+    wallZPos.pos = (vec3d) {0, 0, ARENA_RADIUS};
     drawWall(&wallZPos);
+
+    // Set up co-ordinates for the wall at Z- and draw.
+    wall wallZNeg;
+    wallZNeg.pos = (vec3d) {0, 0, -ARENA_RADIUS};
     drawWall(&wallZNeg);
 }

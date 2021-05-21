@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include "../Handlers/mathHandler.h"
 
 #if _WIN32
 #include <windows.h>
@@ -18,18 +19,17 @@
 #include <GL/glut.h>
 #endif
 
-#define WALL_SEGMENTS 10
-#define ARENA_RADIUS 10
+#define WALL_SEGMENTS 20
+#define ARENA_RADIUS 50
 
 typedef struct {
-    int x;
-    int y;
-    int z;
+    vec3d pos;
+    float colour[];
 } wall;
 
 void drawAxes();
 
-wall initWall(int x, int y, int z);
+void initWall(wall *wall);
 
 void drawWall(wall *wall);
 
