@@ -30,9 +30,10 @@ void onDisplay() {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    //TODO: Put draw methods here.
+    //TODO: Psut draw methods here.
     placeCamera(&cam);
     drawAxes();
+    drawArena();
 
     glutSwapBuffers();
     int err;

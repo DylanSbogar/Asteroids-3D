@@ -24,8 +24,6 @@
 
 #define KEY_ESC 27
 
-
-
 int main(int argc, char **argv);
 
 void initGame();

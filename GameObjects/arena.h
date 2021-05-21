@@ -18,15 +18,21 @@
 #include <GL/glut.h>
 #endif
 
+#define WALL_SEGMENTS 10
+#define ARENA_RADIUS 10
+
 typedef struct {
-    // wallXpos
-    // wallXneg
-    // wallYpos
-    // wallYneg
-    // wallZpos
-    // wallZneg
-} arena;
+    int x;
+    int y;
+    int z;
+} wall;
 
 void drawAxes();
+
+wall initWall(int x, int y, int z);
+
+void drawWall(wall *wall);
+
+void drawArena();
 
 #endif //ARENA_H
