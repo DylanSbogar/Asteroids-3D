@@ -24,6 +24,15 @@
 
 #define KEY_ESC 27
 
+typedef struct {
+    bool movingForward;
+    bool turningLeft;
+    bool turningRight;
+    bool rollingLeft;
+    bool rollingRight;
+    bool restartGame;
+} keyHandler;
+
 int main(int argc, char **argv);
 
 void initGame();

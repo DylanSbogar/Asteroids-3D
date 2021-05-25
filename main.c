@@ -9,6 +9,7 @@ int currentTime = 0;
 float previousTime = 0.0;
 bool firstMouse = true;
 
+keyHandler kh;
 camera cam;
 ship player;
 
