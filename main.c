@@ -31,10 +31,11 @@ void onDisplay() {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    //TODO: Psut draw methods here.
+    //TODO: Put draw methods here.
     placeCamera(&cam);
     drawAxes();
     drawArena();
+    drawShip(&player);
 
     glutSwapBuffers();
     int err;
@@ -48,22 +49,54 @@ void onIdle() {
 
     previousTime = currentTime;
     updateCameraPosition(&cam, &player);
+    updateGameState(&cam, &player, deltaTime);
     glutPostRedisplay();
 }
 
-void updateGameState() {
+void updateGameState(camera *camera, ship *ship, float deltaTime) {
+    if(kh.movingForward) {
+        // moveCameraZ(&cam, 1, deltaTime);
+    }
+    if(kh.turningLeft) {
 
+    }
+    if(kh.turningRight) {
+
+    }
+    if(kh.rollingLeft) {
+
+    }
+    if(kh.rollingRight) {
+
+    }
+    if(kh.restartGame) {
+        initGame();
+    }
 }
 
 void onKeyPress(unsigned char key, int x, int y) {
     switch(toupper(key)) {
         case 'W':
+            kh.movingForward = true;
             break;
         case 'A':
+            kh.turningLeft = true;
+            kh.turningRight = false;
             break;
         case 'D':
+            kh.turningRight = true;
+            kh.turningLeft = false;
+            break;
+        case 'Q':
+            kh.rollingLeft = true;
+            kh.rollingRight = false;
+            break;
+        case 'E':
+            kh.rollingRight = true;
+            kh.rollingLeft = false;
             break;
         case 'R':
+            kh.restartGame = true;
             break;
         case KEY_ESC:
             exit(EXIT_SUCCESS);
@@ -73,12 +106,22 @@ void onKeyPress(unsigned char key, int x, int y) {
 void onKeyUp(unsigned char key, int x, int y) {
     switch(toupper(key)) {
         case 'W':
+            kh.movingForward = false;
             break;
         case 'A':
+            kh.turningLeft = false;
             break;
         case 'D':
+            kh.turningRight = false;
+            break;
+        case 'Q':
+            kh.rollingLeft = false;
+            break;
+        case 'E':
+            kh.rollingRight = false;
             break;
         case 'R':
+            kh.restartGame = false;
             break;
     }
 }
@@ -129,7 +172,18 @@ void onMouseMove(int x, int y) {
 }
 // END INPUT METHODS
 
+void initKeyHandler() {
+    kh.movingForward = false;
+    kh.turningLeft = false;
+    kh.turningRight = false;
+    kh.rollingLeft = false;
+    kh.rollingRight = false;
+    kh.restartGame = false;
+}
+
 void initGame() {
+    initKeyHandler();
+
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
     glutCreateWindow("Asteroids Arena 3D");
     glutFullScreen();

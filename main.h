@@ -37,13 +37,15 @@ int main(int argc, char **argv);
 
 void initGame();
 
+void initKeyHandler();
+
 void onReshape(int w, int h);
 
 void onDisplay();
 
 void onIdle();
 
-void updateGameState();
+void updateGameState(camera *camera, ship *ship, float deltaTime);
 
 void onKeyPress(unsigned char key, int x, int y);
 

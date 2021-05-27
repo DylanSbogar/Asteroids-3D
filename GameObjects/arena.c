@@ -27,7 +27,7 @@ void initWall(wall *wall) {
 }
 
 void drawWall(wall *wall) {
-    glColor3f(0.3, 0.3, 0.3);
+    glColor3f(0.1, 0.1, 0.1);
     // glColor3f(0.3, 0.0, 0.0);
     glPushMatrix(); 
         glTranslatef(wall->pos.x, wall->pos.y, wall->pos.z);
@@ -35,12 +35,12 @@ void drawWall(wall *wall) {
         if(wall->pos.y != 0.0) glRotatef(270.0, 1.0, 0.0, 0.0);
         glScalef(ARENA_RADIUS, ARENA_RADIUS, ARENA_RADIUS);
         glBegin(GL_LINES);
-            float pos = -1.0;
-            float inc = 2.0 / (float)WALL_SEGMENTS;
+            float position = -1.0;
+            float increment = 2.0 / (float)WALL_SEGMENTS;
 
-            for(int i = 0; i <= WALL_SEGMENTS; i++, pos+= inc) {
-                glVertex3f(pos, -1.0, 0.0); glVertex3f(pos, 1.0, 0.0);
-                glVertex3f(-1.0, pos, 0.0); glVertex3f(1.0, pos, 0.0);
+            for(int i = 0; i <= WALL_SEGMENTS; i++, position+= increment) {
+                glVertex3f(position, -1.0, 0.0); glVertex3f(position, 1.0, 0.0);
+                glVertex3f(-1.0, position, 0.0); glVertex3f(1.0, position, 0.0);
             }
         glEnd();
     glPopMatrix();
