@@ -55,13 +55,20 @@ void onIdle() {
 
 void updateGameState(camera *camera, ship *ship, float deltaTime) {
     if(kh.movingForward) {
-        // moveCameraZ(&cam, 1, deltaTime);
+        printf("FORWARD\n");
+        camera->pos.z += MOVE_VELOCITY;
+    }
+    if(kh.movingBackward) {
+        printf("BACKWARD\n");
+        camera->pos.z -= MOVE_VELOCITY;
     }
     if(kh.turningLeft) {
-
+        printf("LEFT\n");
+        camera->pos.x += MOVE_VELOCITY;
     }
     if(kh.turningRight) {
-
+        printf("RIGHT\n");
+        camera->pos.x -= MOVE_VELOCITY;
     }
     if(kh.rollingLeft) {
 
@@ -78,10 +85,15 @@ void onKeyPress(unsigned char key, int x, int y) {
     switch(toupper(key)) {
         case 'W':
             kh.movingForward = true;
+            kh.movingBackward = false;
             break;
         case 'A':
             kh.turningLeft = true;
             kh.turningRight = false;
+            break;
+        case 'S':
+            kh.movingBackward = true;
+            kh.movingForward = false;
             break;
         case 'D':
             kh.turningRight = true;
@@ -110,6 +122,9 @@ void onKeyUp(unsigned char key, int x, int y) {
             break;
         case 'A':
             kh.turningLeft = false;
+            break;
+        case 'S':
+            kh.movingBackward = false;
             break;
         case 'D':
             kh.turningRight = false;
@@ -174,6 +189,7 @@ void onMouseMove(int x, int y) {
 
 void initKeyHandler() {
     kh.movingForward = false;
+    kh.movingBackward = false;
     kh.turningLeft = false;
     kh.turningRight = false;
     kh.rollingLeft = false;

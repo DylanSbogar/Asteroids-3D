@@ -20,7 +20,7 @@
 #endif
 
 #define WALL_SEGMENTS 20
-#define ARENA_RADIUS 50
+#define ARENA_RADIUS 100
 
 typedef struct {
     vec3d pos;

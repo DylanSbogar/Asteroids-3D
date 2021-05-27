@@ -24,6 +24,8 @@
 
 #endif
 
+#define MOVE_VELOCITY 2.5
+
 typedef struct {
     vec3d pos;
     vec3d look;
