@@ -55,14 +55,14 @@ void onIdle() {
 
 void updateGameState(camera *camera, ship *ship, float deltaTime) {
     if(kh.movingForward) {
-        camera->pos.x += deltaTime * (MOVE_VELOCITY * camera->front.x);
-        camera->pos.y += deltaTime * (MOVE_VELOCITY * camera->front.y);
-        camera->pos.z += deltaTime * (MOVE_VELOCITY * camera->front.z);
+        camera->pos.x += deltaTime * (camera->velocity * camera->front.x);
+        camera->pos.y += deltaTime * (camera->velocity * camera->front.y);
+        camera->pos.z += deltaTime * (camera->velocity * camera->front.z);
     }
     if(kh.movingBackward) {
-        camera->pos.x -= deltaTime * (MOVE_VELOCITY * camera->front.x);
-        camera->pos.y -= deltaTime * (MOVE_VELOCITY * camera->front.y);
-        camera->pos.z -= deltaTime * (MOVE_VELOCITY * camera->front.z);
+        camera->pos.x -= deltaTime * (camera->velocity * camera->front.x);
+        camera->pos.y -= deltaTime * (camera->velocity * camera->front.y);
+        camera->pos.z -= deltaTime * (camera->velocity * camera->front.z);
     }
     if(kh.rollingLeft) {
 

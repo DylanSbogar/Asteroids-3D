@@ -13,7 +13,7 @@ void initShip(ship *ship) {
 }
 
 void drawShip(ship *ship) {
-
+    
 }
 
 void moveShip(ship *ship, float deltaTime) {

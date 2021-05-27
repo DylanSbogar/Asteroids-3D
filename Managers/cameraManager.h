@@ -24,8 +24,6 @@
 
 #endif
 
-#define MOVE_VELOCITY 0.1
-
 typedef struct {
     vec3d pos;
     vec3d look;
@@ -34,6 +32,7 @@ typedef struct {
     float pitch, yaw, roll;
     int lastX, lastY;
     bool warpedCursor;
+    float velocity;
 } camera;
 
 void initCamera(camera *camera);
