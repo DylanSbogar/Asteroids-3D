@@ -55,20 +55,14 @@ void onIdle() {
 
 void updateGameState(camera *camera, ship *ship, float deltaTime) {
     if(kh.movingForward) {
-        printf("FORWARD\n");
-        camera->pos.z += MOVE_VELOCITY;
+        camera->pos.x += deltaTime * (MOVE_VELOCITY * camera->front.x);
+        camera->pos.y += deltaTime * (MOVE_VELOCITY * camera->front.y);
+        camera->pos.z += deltaTime * (MOVE_VELOCITY * camera->front.z);
     }
     if(kh.movingBackward) {
-        printf("BACKWARD\n");
-        camera->pos.z -= MOVE_VELOCITY;
-    }
-    if(kh.turningLeft) {
-        printf("LEFT\n");
-        camera->pos.x += MOVE_VELOCITY;
-    }
-    if(kh.turningRight) {
-        printf("RIGHT\n");
-        camera->pos.x -= MOVE_VELOCITY;
+        camera->pos.x -= deltaTime * (MOVE_VELOCITY * camera->front.x);
+        camera->pos.y -= deltaTime * (MOVE_VELOCITY * camera->front.y);
+        camera->pos.z -= deltaTime * (MOVE_VELOCITY * camera->front.z);
     }
     if(kh.rollingLeft) {
 
@@ -88,22 +82,14 @@ void onKeyPress(unsigned char key, int x, int y) {
             kh.movingBackward = false;
             break;
         case 'A':
-            kh.turningLeft = true;
-            kh.turningRight = false;
+            kh.rollingLeft = true;
+            kh.rollingRight = false;
             break;
         case 'S':
             kh.movingBackward = true;
             kh.movingForward = false;
             break;
         case 'D':
-            kh.turningRight = true;
-            kh.turningLeft = false;
-            break;
-        case 'Q':
-            kh.rollingLeft = true;
-            kh.rollingRight = false;
-            break;
-        case 'E':
             kh.rollingRight = true;
             kh.rollingLeft = false;
             break;
@@ -121,18 +107,12 @@ void onKeyUp(unsigned char key, int x, int y) {
             kh.movingForward = false;
             break;
         case 'A':
-            kh.turningLeft = false;
+            kh.rollingLeft = false;
             break;
         case 'S':
             kh.movingBackward = false;
             break;
         case 'D':
-            kh.turningRight = false;
-            break;
-        case 'Q':
-            kh.rollingLeft = false;
-            break;
-        case 'E':
             kh.rollingRight = false;
             break;
         case 'R':
@@ -170,13 +150,23 @@ void onMouseMove(int x, int y) {
     cam.yaw += xOffset;
     cam.pitch += yOffset;
 
+    // Set a limiter for the pitch of the camera.
     int limit = 45;
     if (cam.pitch > limit) {
         cam.pitch = limit;
     } else if (cam.pitch < -limit) {
         cam.pitch = -limit;
     }
+    
+    // Set the camera's direction (look) vector and normalise it.
+    vec3d front;
+    front.x = cos(DEG_TO_RAD(cam.yaw)) * cos(DEG_TO_RAD(cam.pitch));
+    front.y = sin(DEG_TO_RAD(cam.pitch));
+    front.z = sin(DEG_TO_RAD(cam.yaw)) * cos(DEG_TO_RAD(cam.pitch));
+    cam.front = normalise(front);
 
+
+    // If the cursor reaches the edge of the screen, place it back in the center.
     int centerX = screenWidth / 2.0;
     int centerY = screenHeight / 2.0;
     if (x <= 10 || y <= 10 || x >= screenWidth - 10 || y >= screenHeight - 10) {
@@ -190,8 +180,6 @@ void onMouseMove(int x, int y) {
 void initKeyHandler() {
     kh.movingForward = false;
     kh.movingBackward = false;
-    kh.turningLeft = false;
-    kh.turningRight = false;
     kh.rollingLeft = false;
     kh.rollingRight = false;
     kh.restartGame = false;

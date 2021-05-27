@@ -24,11 +24,12 @@
 
 #endif
 
-#define MOVE_VELOCITY 2.5
+#define MOVE_VELOCITY 0.1
 
 typedef struct {
     vec3d pos;
     vec3d look;
+    vec3d front;
     vec3d up;
     float pitch, yaw, roll;
     int lastX, lastY;

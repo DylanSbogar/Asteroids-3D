@@ -27,8 +27,6 @@
 typedef struct {
     bool movingForward;
     bool movingBackward;
-    bool turningLeft;
-    bool turningRight;
     bool rollingLeft;
     bool rollingRight;
     bool restartGame;

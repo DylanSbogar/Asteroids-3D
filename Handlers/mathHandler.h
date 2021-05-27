@@ -53,4 +53,15 @@ static inline vec3d vec3dAddition(vec3d vec, vec3d vec2) {
     return result;
 }
 
+static inline vec3d normalise(vec3d vec) {
+    float vecLength = sqrt((vec.x * vec.x) + (vec.y * vec.y) + (vec.z * vec.z));
+
+    vec3d result;
+    result.x = vec.x / vecLength;
+    result.y = vec.y / vecLength;
+    result.z = vec.z / vecLength;
+    
+    return result;
+}
+
 #endif //MATH_HANDLER_H

@@ -5,6 +5,10 @@ void initCamera(camera *camera) {
     camera->pos.y = 0;
     camera->pos.z = 0;
 
+    camera->front.x = 0;
+    camera->front.y = 0;
+    camera->front.z = -1;
+
     camera->look.x = 0;
     camera->look.y = 0;
     camera->look.z = 10;
@@ -22,7 +26,7 @@ void placeCamera(camera *camera) {
     //           camera->up.x, camera->up.y, camera->up.z);
 
       gluLookAt(camera->pos.x, camera->pos.y, camera->pos.z,
-            camera->pos.x, camera->pos.y, camera->pos.z + 10,
+            camera->pos.x + camera->front.x, camera->pos.y + camera->front.y, camera->pos.z + camera->front.z,
             0, 1, 0);
 }
 
