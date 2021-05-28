@@ -77,3 +77,37 @@ void drawArena() {
     wallZNeg.pos = (vec3d) {0, 0, -ARENA_RADIUS};
     drawWall(&wallZNeg);
 }
+
+// TODO: Change 6, 2 and 2 with ships length, width and height (roughly)
+bool shipWarning(ship *ship) {
+       if(ship->pos.x + (6 * SHIP_WARNING) >= ARENA_RADIUS || ship->pos.x + (6 * SHIP_COLLISION) <= -ARENA_RADIUS ) {
+        return true;
+    }
+
+    if(ship->pos.y + (2 * SHIP_WARNING) >= ARENA_RADIUS || ship->pos.y + (6 * SHIP_COLLISION) <= -ARENA_RADIUS ) {
+        return true;
+    }
+
+    if(ship->pos.z + (2 * SHIP_WARNING) >= ARENA_RADIUS || ship->pos.z + (6 * SHIP_COLLISION) <= -ARENA_RADIUS ) {
+        return true;
+    } else {
+        return false;
+    } 
+}
+
+// TODO: Change 6, 2 and 2 with ships length, width and height (roughly)
+bool shipCollision(ship *ship) {
+    if(ship->pos.x + (6 * SHIP_COLLISION) >= ARENA_RADIUS || ship->pos.x + (6 * SHIP_COLLISION) <= -ARENA_RADIUS ) {
+        return true;
+    }
+
+    if(ship->pos.y + (6 * SHIP_COLLISION) >= ARENA_RADIUS || ship->pos.y + (6 * SHIP_COLLISION) <= -ARENA_RADIUS ) {
+        return true;
+    }
+
+    if(ship->pos.z + (6 * SHIP_COLLISION) >= ARENA_RADIUS || ship->pos.z + (6 * SHIP_COLLISION) <= -ARENA_RADIUS ) {
+        return true;
+    } else {
+        return false;
+    }
+}

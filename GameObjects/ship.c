@@ -29,8 +29,8 @@ void moveShip(ship *ship, float deltaTime, camera *camera) {
     ship->pos.x = camera->pos.x + 15;
     ship->pos.y = camera->pos.y - 3;
     ship->pos.z = camera->pos.z;
-    
-    printf("ship->pos.x = %f\n", ship->pos.x);
-    printf("ship->pos.y = %f\n", ship->pos.y);
-    printf("ship->pos.z = %f\n", ship->pos.z);
+
+    // printf("ship->pos.x = %f\n", ship->pos.x);
+    // printf("ship->pos.y = %f\n", ship->pos.y);
+    // printf("ship->pos.z = %f\n", ship->pos.z);
 }

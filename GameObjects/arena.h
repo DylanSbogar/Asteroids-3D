@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "../Handlers/mathHandler.h"
+#include "ship.h"
 
 #if _WIN32
 #include <windows.h>
@@ -34,5 +35,9 @@ void initWall(wall *wall);
 void drawWall(wall *wall);
 
 void drawArena();
+
+bool shipWarning(ship *ship);
+
+bool shipCollision(ship *ship);
 
 #endif //ARENA_H

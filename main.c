@@ -8,6 +8,7 @@ int screenHeight = 0;
 int currentTime = 0;
 float previousTime = 0.0;
 bool firstMouse = true;
+bool gameOver = false;
 
 keyHandler kh;
 camera cam;
@@ -53,23 +54,27 @@ void onIdle() {
 }
 
 void updateGameState(camera *camera, ship *ship, float deltaTime) {
-    if(kh.movingForward) {
-        moveCamera(&cam, deltaTime, 1);
-        moveShip(&player, deltaTime, &cam);
+        if(kh.movingForward) {
+            moveCamera(&cam, deltaTime, 1);
+            moveShip(&player, deltaTime, &cam);
 
-    }
-    if(kh.movingBackward) {
-        moveCamera(&cam, deltaTime, -1);
-    }
-    if(kh.rollingLeft) {
+        }
+        if(kh.movingBackward) {
+            moveCamera(&cam, deltaTime, -1);
+        }
+        if(kh.rollingLeft) {
 
-    }
-    if(kh.rollingRight) {
+        }
+        if(kh.rollingRight) {
 
-    }
-    if(kh.restartGame) {
-        initGame();
-    }
+        }
+        if(kh.restartGame) {
+            initGame();
+        }
+
+        if(shipCollision(&player)) {
+            initGame();
+        }
 }
 
 void onKeyPress(unsigned char key, int x, int y) {
@@ -91,6 +96,7 @@ void onKeyPress(unsigned char key, int x, int y) {
             kh.rollingLeft = false;
             break;
         case 'R':
+            gameOver = false;
             kh.restartGame = true;
             break;
         case KEY_ESC:
@@ -113,6 +119,7 @@ void onKeyUp(unsigned char key, int x, int y) {
             kh.rollingRight = false;
             break;
         case 'R':
+            gameOver = false;
             kh.restartGame = false;
             break;
     }

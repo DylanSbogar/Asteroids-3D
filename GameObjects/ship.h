@@ -24,6 +24,9 @@
 
 #endif
 
+#define SHIP_WARNING 2.0
+#define SHIP_COLLISION 1.25
+
 typedef struct {
     vec3d pos;
     vec3d dir;
