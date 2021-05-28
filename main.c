@@ -21,7 +21,7 @@ void onReshape(int w, int h) {
     gluPerspective(45.0, 1.0, 1.0, 1000.0);
 
     initCamera(&cam);
-    initShip(&player);
+    initShip(&player, &cam);
 }
 
 void onDisplay() {
@@ -33,9 +33,9 @@ void onDisplay() {
 
     //TODO: Put draw methods here.
     placeCamera(&cam);
-    drawAxes();
     drawArena();
-    drawShip(&player);
+    drawAxes();
+    drawShip(&player, &cam);
 
     glutSwapBuffers();
     int err;
@@ -55,15 +55,11 @@ void onIdle() {
 void updateGameState(camera *camera, ship *ship, float deltaTime) {
     if(kh.movingForward) {
         moveCamera(&cam, deltaTime, 1);
-        // camera->pos.x += deltaTime * (camera->velocity * camera->front.x);
-        // camera->pos.y += deltaTime * (camera->velocity * camera->front.y);
-        // camera->pos.z += deltaTime * (camera->velocity * camera->front.z);
+        moveShip(&player, deltaTime, &cam);
+
     }
     if(kh.movingBackward) {
         moveCamera(&cam, deltaTime, -1);
-        // camera->pos.x -= deltaTime * (camera->velocity * camera->front.x);
-        // camera->pos.y -= deltaTime * (camera->velocity * camera->front.y);
-        // camera->pos.z -= deltaTime * (camera->velocity * camera->front.z);
     }
     if(kh.rollingLeft) {
 
@@ -198,6 +194,7 @@ void initGame() {
     glutKeyboardUpFunc(onKeyUp);
     glutMouseFunc(onMousePress);
     glutPassiveMotionFunc(onMouseMove);
+    
     glutDisplayFunc(onDisplay);
     glutIdleFunc(onIdle);
     // glutSetCursor(GLUT_CURSOR_NONE);
