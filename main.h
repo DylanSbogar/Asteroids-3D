@@ -8,6 +8,7 @@
 #include "CoreGraphics/CoreGraphics.h"
 #include "Managers/cameraManager.h"
 #include "GameObjects/arena.h"
+#include "GameObjects/ship.h"
 
 #if _WIN32
 #include <windows.h>

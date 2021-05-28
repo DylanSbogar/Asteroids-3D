@@ -5,7 +5,6 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "../Handlers/mathHandler.h"
-#include "../GameObjects/ship.h"
 
 #if _WIN32
 #include <windows.h>
@@ -39,6 +38,6 @@ void initCamera(camera *camera);
 
 void placeCamera(camera *camera);
 
-void updateCameraPosition(camera *camera, ship *ship);
+void moveCamera(camera *camera, float deltaTime, int turnValue);
 
 #endif //CAMERA_MANAGER_H

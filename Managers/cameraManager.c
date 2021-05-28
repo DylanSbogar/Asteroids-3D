@@ -24,6 +24,8 @@ void placeCamera(camera *camera) {
             0, 1, 0);
 }
 
-void updateCameraPosition(camera *camera, ship *ship) {
-
+void moveCamera(camera *camera, float deltaTime, int turnValue) {
+    camera->pos.x += turnValue * (deltaTime * (camera->velocity * camera->front.x));
+    camera->pos.y += turnValue * (deltaTime * (camera->velocity * camera->front.y));
+    camera->pos.z += turnValue * (deltaTime * (camera->velocity * camera->front.z));
 }
