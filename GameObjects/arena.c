@@ -123,7 +123,7 @@ bool shipWarning(ship *ship) {
     return false;
 }
 
-// TODO: Change 6, 2 and 2 with ships length, width and height (roughly)
+// TODO: Change the hard coded number 6 to match the ships rough length, once model loading is complete.
 bool shipCollision(ship *ship) {
     if(ship->pos.x + (6 * SHIP_COLLISION) >= ARENA_RADIUS || ship->pos.x + (6 * SHIP_COLLISION) <= -ARENA_RADIUS ) {
         return true;
@@ -135,7 +135,6 @@ bool shipCollision(ship *ship) {
 
     if(ship->pos.z + (6 * SHIP_COLLISION) >= ARENA_RADIUS || ship->pos.z + (6 * SHIP_COLLISION) <= -ARENA_RADIUS ) {
         return true;
-    } else {
-        return false;
     }
+    return false;
 }

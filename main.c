@@ -13,6 +13,7 @@ bool gameOver = false;
 keyHandler kh;
 camera cam;
 ship player;
+asteroid tempAsteroid;
 
 void onReshape(int w, int h) {
     glViewport(0, 0, w, h);
@@ -23,6 +24,7 @@ void onReshape(int w, int h) {
 
     initCamera(&cam);
     initShip(&player, &cam);
+    initAsteroid(&tempAsteroid);
 }
 
 void renderFrame() {
@@ -34,6 +36,7 @@ void renderFrame() {
     drawArena();
     drawAxes();
     drawShip(&player, &cam);
+    drawAsteroid(&tempAsteroid);
 }
 
 void onDisplay() {
