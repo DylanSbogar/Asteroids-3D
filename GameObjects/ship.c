@@ -1,9 +1,9 @@
 #include "ship.h"
 
 void initShip(ship *ship, camera *camera) {
-    ship->pos.x = 0;
-    ship->pos.y = 0;
-    ship->pos.z = 0;
+    ship->pos.x = camera->pos.x + 15;
+    ship->pos.y = camera->pos.y - 3;
+    ship->pos.z = camera->pos.z;
 
     ship->dir.x = 0;
     ship->dir.y = 0;

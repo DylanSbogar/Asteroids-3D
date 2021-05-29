@@ -1,9 +1,9 @@
 #include "cameraManager.h"
 
 void initCamera(camera *camera) {
-    camera->pos.x = 0;
-    camera->pos.y = 0;
-    camera->pos.z = 0;
+    camera->pos.x = -10;
+    camera->pos.y = -10;
+    camera->pos.z = -10;
 
     camera->front.x = 0;
     camera->front.y = 0;

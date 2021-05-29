@@ -1,6 +1,6 @@
 #include "asteroid.h"
 
-void initAsteroid(asteroid *asteroid) {
+void initAsteroid(asteroid *asteroid, ship *ship) {
     // Set the vertices of the asteroid.
     const float r = 1.0;
     float theta, phi;
@@ -17,6 +17,26 @@ void initAsteroid(asteroid *asteroid) {
             asteroid->vertices[i][j] = vertex;
         }
     }
+
+    // Set the position of the asteroid.
+    // TODO: Change the hard-coded position
+    asteroid->pos.x = -100;
+    asteroid->pos.y = -100;
+    asteroid->pos.z = -100;
+
+    // Set the size of the asteroid.
+    asteroid->size = rand() % (ASTEROID_MAX_SIZE + 1 - ASTEROID_MIN_SIZE) + ASTEROID_MIN_SIZE;
+
+    // Set the velocity of the asteroid.
+    asteroid->velocity = rand() % (ASTEROID_MAX_VELOCITY + 1 - ASTEROID_MIN_VELOCITY) + ASTEROID_MIN_VELOCITY;
+    asteroid->velocity /= 1000;
+
+    vec3d newVec = directionBetweenPoints(asteroid->pos, ship->pos);
+    float length = PYTHAGORAS(newVec.x, newVec.y, newVec.z);
+
+    asteroid->dir.x = (newVec.x / length);
+    asteroid->dir.y = (newVec.y / length);
+    asteroid->dir.z = (newVec.z / length);
 }
 
 void drawAsteroid(asteroid *asteroid) {
@@ -31,10 +51,10 @@ void drawAsteroid(asteroid *asteroid) {
 
     // position and draw
     // glRotatef(g_platform_rotation, 0.0, 1.0, 0.0);
-    glTranslatef(50.0, 50.0, 50.0);
+    glTranslatef(asteroid->pos.x, asteroid->pos.y, asteroid->pos.z);
 
     glPushMatrix();
-    glScalef(10.0, 10.0, 10.0); // TODO: Replace 10.0 with asteroid->size, since we draw it as a 1x1, then scale to the random size.
+    glScalef(asteroid->size, asteroid->size, asteroid->size); // TODO: Replace 10.0 with asteroid->size, since we draw it as a 1x1, then scale to the random size.
     //glutSolidCube(1.0);
     int i, j;
     vec3d *v1, *v2;
@@ -52,4 +72,24 @@ void drawAsteroid(asteroid *asteroid) {
     }
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     glPopMatrix();
+
+    // printf("asteroid->dir.x = %f\n", asteroid->dir.x);
+    // printf("asteroid->dir.y = %f\n", asteroid->dir.y);
+    // printf("asteroid->dir.z = %f\n", asteroid->dir.z);
+}
+
+void moveAsteroid(asteroid *asteroid, float deltaTime, int round) {
+    vec3d result;
+
+    result.x = asteroid->dir.x * (asteroid->velocity * deltaTime);
+    result.y = asteroid->dir.y * (asteroid->velocity * deltaTime);
+    result.z = asteroid->dir.z * (asteroid->velocity * deltaTime);
+
+    asteroid->pos.x += result.x;
+    asteroid->pos.y += result.y;
+    asteroid->pos.z += result.z;
+
+    // asteroid->pos.x -= (deltaTime * (asteroid->velocity));
+    // asteroid->pos.y -= (deltaTime * (asteroid->velocity));
+    // asteroid->pos.z -= (deltaTime * (asteroid->velocity));
 }

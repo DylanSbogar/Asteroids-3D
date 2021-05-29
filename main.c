@@ -22,9 +22,16 @@ void onReshape(int w, int h) {
     glLoadIdentity();
     gluPerspective(45.0, 1.0, 1.0, 1000.0);
 
+    screenWidth = w;
+    screenHeight = h;
+
+    // Initialise the random number generator.
+    time_t t;
+    srand((unsigned) time(&t));
+
     initCamera(&cam);
     initShip(&player, &cam);
-    initAsteroid(&tempAsteroid);
+    initAsteroid(&tempAsteroid, &player);
 }
 
 void renderFrame() {
@@ -59,6 +66,9 @@ void onIdle() {
 
     previousTime = currentTime;
     updateGameState(&cam, &player, deltaTime);
+
+    moveAsteroid(&tempAsteroid, deltaTime, 1);
+
     glutPostRedisplay();
 }
 
