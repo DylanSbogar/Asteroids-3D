@@ -25,7 +25,6 @@
 
 typedef struct {
     vec3d pos;
-    vec3d look;
     vec3d front;
     vec3d up;
     float pitch, yaw, roll;

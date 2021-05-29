@@ -47,6 +47,8 @@ void onIdle();
 
 void updateGameState(camera *camera, ship *ship, float deltaTime);
 
+void renderFrame();
+
 void onKeyPress(unsigned char key, int x, int y);
 
 void onKeyUp(unsigned char key, int x, int y);

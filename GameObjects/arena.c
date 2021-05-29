@@ -27,9 +27,9 @@ void initWall(wall *wall) {
 }
 
 void drawWall(wall *wall) {
-    glColor3f(0.1, 0.1, 0.1);
     // glColor3f(0.3, 0.0, 0.0);
     glPushMatrix(); 
+        glColor3f(0.2, 0.2, 0.2);
         glTranslatef(wall->pos.x, wall->pos.y, wall->pos.z);
         if(wall->pos.x != 0.0) glRotatef(90.0, 0.0, 1.0, 0.0);
         if(wall->pos.y != 0.0) glRotatef(270.0, 1.0, 0.0, 0.0);
@@ -80,19 +80,47 @@ void drawArena() {
 
 // TODO: Change 6, 2 and 2 with ships length, width and height (roughly)
 bool shipWarning(ship *ship) {
-       if(ship->pos.x + (6 * SHIP_WARNING) >= ARENA_RADIUS || ship->pos.x + (6 * SHIP_COLLISION) <= -ARENA_RADIUS ) {
+    if(ship->pos.x + (6 * SHIP_WARNING) >= ARENA_RADIUS || ship->pos.x + (6 * SHIP_COLLISION) <= -ARENA_RADIUS ) {
+        printf("ship->pos.x = %f\n", ship->pos.x);
+        printf("ship->pos.y = %f\n", ship->pos.y);
+        printf("ship->pos.z = %f\n", ship->pos.z);
         return true;
     }
 
-    if(ship->pos.y + (2 * SHIP_WARNING) >= ARENA_RADIUS || ship->pos.y + (6 * SHIP_COLLISION) <= -ARENA_RADIUS ) {
+    if(ship->pos.y + (6 * SHIP_WARNING) >= ARENA_RADIUS || ship->pos.y + (6 * SHIP_COLLISION) <= -ARENA_RADIUS ) {
+        printf("ship->pos.x = %f\n", ship->pos.x);
+        printf("ship->pos.y = %f\n", ship->pos.y);
+        printf("ship->pos.z = %f\n", ship->pos.z);
         return true;
     }
 
-    if(ship->pos.z + (2 * SHIP_WARNING) >= ARENA_RADIUS || ship->pos.z + (6 * SHIP_COLLISION) <= -ARENA_RADIUS ) {
+    if(ship->pos.z + (6 * SHIP_WARNING) >= ARENA_RADIUS || ship->pos.z + (6 * SHIP_COLLISION) <= -ARENA_RADIUS ) {
+        printf("ship->pos.x = %f\n", ship->pos.x);
+        printf("ship->pos.y = %f\n", ship->pos.y);
+        printf("ship->pos.z = %f\n", ship->pos.z);
         return true;
-    } else {
-        return false;
     } 
+    if(ship->pos.x - (6 * SHIP_WARNING) >= ARENA_RADIUS || ship->pos.x - (6 * SHIP_COLLISION) <= -ARENA_RADIUS ) {
+        printf("ship->pos.x = %f\n", ship->pos.x);
+        printf("ship->pos.y = %f\n", ship->pos.y);
+        printf("ship->pos.z = %f\n", ship->pos.z);
+        return true;
+    }
+
+    if(ship->pos.y - (6 * SHIP_WARNING) >= ARENA_RADIUS || ship->pos.y - (6 * SHIP_COLLISION) <= -ARENA_RADIUS ) {
+        printf("ship->pos.x = %f\n", ship->pos.x);
+        printf("ship->pos.y = %f\n", ship->pos.y);
+        printf("ship->pos.z = %f\n", ship->pos.z);
+        return true;
+    }
+
+    if(ship->pos.z - (6 * SHIP_WARNING) >= ARENA_RADIUS || ship->pos.z - (6 * SHIP_COLLISION) <= -ARENA_RADIUS ) {
+        printf("ship->pos.x = %f\n", ship->pos.x);
+        printf("ship->pos.y = %f\n", ship->pos.y);
+        printf("ship->pos.z = %f\n", ship->pos.z);
+        return true;
+    } 
+    return false;
 }
 
 // TODO: Change 6, 2 and 2 with ships length, width and height (roughly)

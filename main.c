@@ -25,18 +25,24 @@ void onReshape(int w, int h) {
     initShip(&player, &cam);
 }
 
-void onDisplay() {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glEnable(GL_DEPTH_TEST);
-
+void renderFrame() {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    //TODO: Put draw methods here.
+     //TODO: Put draw methods here.
     placeCamera(&cam);
     drawArena();
     drawAxes();
     drawShip(&player, &cam);
+}
+
+void onDisplay() {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glEnable(GL_DEPTH_TEST);
+
+
+    renderFrame();
+
 
     glutSwapBuffers();
     int err;
