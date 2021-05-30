@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "../Handlers/mathHandler.h"
+#include "arena.h"
 #include "ship.h"
 
 #if _WIN32
@@ -40,5 +41,7 @@ void initAsteroid(asteroid *asteroid, ship *ship);
 void drawAsteroid(asteroid *asteroid);
 
 void moveAsteroid(asteroid *asteroid, float deltaTime, int round);
+
+bool asteroidWallCollision(asteroid *asteroid);
 
 #endif //ASTEROID_H

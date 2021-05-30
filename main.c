@@ -94,6 +94,8 @@ void updateGameState(camera *camera, ship *ship, float deltaTime) {
         if(shipCollision(&player)) {
             initGame();
         }
+
+        asteroidWallCollision(&tempAsteroid);
 }
 
 void onKeyPress(unsigned char key, int x, int y) {

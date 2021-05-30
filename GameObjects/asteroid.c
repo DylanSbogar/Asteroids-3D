@@ -20,9 +20,9 @@ void initAsteroid(asteroid *asteroid, ship *ship) {
 
     // Set the position of the asteroid.
     // TODO: Change the hard-coded position
-    asteroid->pos.x = -100;
-    asteroid->pos.y = -100;
-    asteroid->pos.z = -100;
+    asteroid->pos.x = 100;
+    asteroid->pos.y = 100;
+    asteroid->pos.z = 100;
 
     // Set the size of the asteroid.
     asteroid->size = rand() % (ASTEROID_MAX_SIZE + 1 - ASTEROID_MIN_SIZE) + ASTEROID_MIN_SIZE;
@@ -92,4 +92,29 @@ void moveAsteroid(asteroid *asteroid, float deltaTime, int round) {
     // asteroid->pos.x -= (deltaTime * (asteroid->velocity));
     // asteroid->pos.y -= (deltaTime * (asteroid->velocity));
     // asteroid->pos.z -= (deltaTime * (asteroid->velocity));
+}
+
+bool asteroidWallCollision(asteroid *asteroid) {
+    if(asteroid->pos.x + asteroid->size >= ARENA_RADIUS || asteroid->pos.x + (asteroid->size/2) <= -ARENA_RADIUS) {
+        printf("COLLISION ON X-AXIS\n");
+        asteroid->dir.x = -asteroid->dir.x;
+        // asteroid->dir.y = -asteroid->dir.y;
+        // asteroid->dir.z = -asteroid->dir.z;
+        return true;
+    }
+    if(asteroid->pos.y + asteroid->size >= ARENA_RADIUS || asteroid->pos.y + (asteroid->size/2) <= -ARENA_RADIUS) {
+        printf("COLLISION ON Y-AXIS\n");
+        // asteroid->dir.x = -asteroid->dir.x;
+        asteroid->dir.y = -asteroid->dir.y;
+        // asteroid->dir.z = -asteroid->dir.z;
+        return true;
+    }
+    if(asteroid->pos.z + asteroid->size >= ARENA_RADIUS || asteroid->pos.z + (asteroid->size/2) <= -ARENA_RADIUS) {
+        printf("COLLISION ON Z-AXIS\n");
+        // asteroid->dir.x = -asteroid->dir.x;
+        // asteroid->dir.y = -asteroid->dir.y;
+        asteroid->dir.z = -asteroid->dir.z;
+        return true;
+    } 
+    return false;
 }
