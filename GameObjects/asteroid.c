@@ -39,7 +39,6 @@ void drawAsteroid(asteroid *asteroid) {
     glTranslatef(asteroid->pos.x, asteroid->pos.y, asteroid->pos.z);
     glScalef(asteroid->size, asteroid->size, asteroid->size);
     glutSolidSphere(1.0, ASTEROID_DIVISIONS, ASTEROID_DIVISIONS);
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     glPopMatrix();
 }
 

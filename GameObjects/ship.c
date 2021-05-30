@@ -19,8 +19,8 @@ void drawShip(ship *ship, camera *camera) {
         glRotatef(-camera->yaw, 0, 1, 0);
         glRotatef(camera->roll, 1, 0, 0);
         glRotatef(camera->pitch, 0, 0, 1);
-        glTranslatef(15,-3,0);
-        glScalef(6.0, 2.0, 2.0);
+        glTranslatef(15,-7,0);
+        glScalef(6.0, 2.0, 4.0);
         glutWireCube(1.0);
     glPopMatrix();
 }

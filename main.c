@@ -49,7 +49,7 @@ void renderFrame() {
      //TODO: Put draw methods here.
     placeCamera(&cam);
     drawArena();
-    drawAxes();
+    // drawAxes();
     drawShip(&player, &cam);
 
     for(int i = 0; i < 5; i++) {
