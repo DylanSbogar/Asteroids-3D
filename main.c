@@ -37,7 +37,7 @@ void onReshape(int w, int h) {
     initCamera(&cam);
     initShip(&player, &cam);
     // initAsteroid(&tempAsteroid, &player);
-    for(int i = 0; i < roundNum; i++) {
+    for(int i = 0; i < 5; i++) {
         initAsteroid(&asteroids[i], &player);
     }
 }
@@ -52,7 +52,7 @@ void renderFrame() {
     drawAxes();
     drawShip(&player, &cam);
 
-    for(int i = 0; i < roundNum; i++) {
+    for(int i = 0; i < 5; i++) {
         drawAsteroid(&asteroids[i]);
     }
 }
@@ -79,7 +79,7 @@ void onIdle() {
     updateGameState(&cam, &player, deltaTime);
 
     // moveAsteroid(&tempAsteroid, deltaTime, 1);
-    for(int i = 0; i < roundNum; i++) {
+    for(int i = 0; i < 5; i++) {
         moveAsteroid(&asteroids[i], deltaTime, roundNum);
     }
 
@@ -109,7 +109,7 @@ void updateGameState(camera *camera, ship *ship, float deltaTime) {
             initGame();
         }
 
-        for(int i = 0; i < roundNum; i++) {
+        for(int i = 0; i < 5; i++) {
             checkActivated(&asteroids[i]);
             asteroidWallCollision(&asteroids[i]);
         }
