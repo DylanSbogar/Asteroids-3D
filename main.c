@@ -21,12 +21,14 @@ asteroid asteroids[MAX_ASTEROIDS];
 void onReshape(int w, int h) {
     glViewport(0, 0, w, h);
 
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluPerspective(45.0, 1.0, 1.0, 1000.0);
-
     screenWidth = w;
     screenHeight = h;
+
+    const double aspectRatio = (double)w / (double)h;
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(90.0, aspectRatio, 1.0, 1000.0);
 
     // Initialise the random number generator.
     time_t t;
