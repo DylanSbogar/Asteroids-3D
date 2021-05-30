@@ -34,19 +34,13 @@ void initAsteroid(asteroid *asteroid, ship *ship) {
 }
 
 void drawAsteroid(asteroid *asteroid) {
-    glColor3f(asteroid->r, asteroid->g, asteroid->b);
-    
-
     glPushMatrix();
+    glColor3f(asteroid->r, asteroid->g, asteroid->b);
     glTranslatef(asteroid->pos.x, asteroid->pos.y, asteroid->pos.z);
     glScalef(asteroid->size, asteroid->size, asteroid->size);
     glutSolidSphere(1.0, ASTEROID_DIVISIONS, ASTEROID_DIVISIONS);
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     glPopMatrix();
-
-    // printf("asteroid->dir.x = %f\n", asteroid->dir.x);
-    // printf("asteroid->dir.y = %f\n", asteroid->dir.y);
-    // printf("asteroid->dir.z = %f\n", asteroid->dir.z);
 }
 
 void moveAsteroid(asteroid *asteroid, float deltaTime, int round) {
@@ -91,15 +85,10 @@ bool asteroidWallCollision(asteroid *asteroid) {
 }
 
 void checkActivated(asteroid *asteroid) {
-    // If the asteroid's x-position is inside the arena.
-    if(asteroid->pos.x + asteroid->size <= ARENA_RADIUS && asteroid->pos.x + asteroid->size >= -ARENA_RADIUS) {
-        // If the asteroid's y-position is inside the arena.
-        if(asteroid->pos.x + asteroid->size <= ARENA_RADIUS && asteroid->pos.x + asteroid->size >= -ARENA_RADIUS) {
-            // If the asteroid's z-position is inside the arena.
-            if(asteroid->pos.x + asteroid->size <= ARENA_RADIUS && asteroid->pos.x + asteroid->size >= -ARENA_RADIUS) {
-                // Activate the asteroid.
-                asteroid->activated = true;
-            }
-        }       
+    // If the asteroid is inside the arena, activate it.
+    if((asteroid->pos.x - asteroid->size > -ARENA_RADIUS && asteroid->pos.x + asteroid->size < ARENA_RADIUS) 
+    && (asteroid->pos.y - asteroid->size > -ARENA_RADIUS && asteroid->pos.y + asteroid->size < ARENA_RADIUS) 
+    && (asteroid->pos.z - asteroid->size > -ARENA_RADIUS && asteroid->pos.z + asteroid->size < ARENA_RADIUS)) {
+        asteroid->activated = true;
     }
 }
