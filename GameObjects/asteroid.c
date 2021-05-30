@@ -43,17 +43,23 @@ void initAsteroid(asteroid *asteroid, ship *ship) {
 
     // Set to false since asteroids start outside the arena.
     asteroid->activated = false;
+
+    // DEBUG: Since asteroids start as inactive, colour them red. 
+    asteroid->r = 1;
+    asteroid->g = 0;
+    asteroid->b = 0;
 }
 
 void drawAsteroid(asteroid *asteroid) {
-    float mat_diffuse[] = { 0.0, 0.8, 0.8, 1.0 };
-    float mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
-    float mat_shininess[] = { 100.0 };
+    // float mat_diffuse[] = { 0.0, 0.8, 0.8, 1.0 };
+    // float mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+    // float mat_shininess[] = { 100.0 };
 
-    // setup materials
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-    glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+    // // setup materials
+    // glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+    // glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+    // glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+    glColor3f(asteroid->r, asteroid->g, asteroid->b);
 
     // position and draw
     // glRotatef(g_platform_rotation, 0.0, 1.0, 0.0);
@@ -102,6 +108,9 @@ void moveAsteroid(asteroid *asteroid, float deltaTime, int round) {
 
 bool asteroidWallCollision(asteroid *asteroid) {
     if(asteroid->activated) {
+        asteroid->r = 1;
+        asteroid->g = 1;
+        asteroid->b = 1;
         if(asteroid->pos.x + asteroid->size >= ARENA_RADIUS || asteroid->pos.x - asteroid->size <= -ARENA_RADIUS) {
             asteroid->dir.x = -asteroid->dir.x;
             return true;
@@ -114,6 +123,10 @@ bool asteroidWallCollision(asteroid *asteroid) {
             asteroid->dir.z = -asteroid->dir.z;
             return true;
         } 
+    } else {
+        asteroid->r = 1;
+        asteroid->g = 0;
+        asteroid->b = 0;
     }
     return false;
 }

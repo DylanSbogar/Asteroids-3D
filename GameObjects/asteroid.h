@@ -35,6 +35,7 @@ typedef struct {
     vec3d dir;
     int size;
     float velocity;
+    float r, g, b; // DEBUG colour of asteroid.
     // float rotateVelocity;
     bool activated; // Is set to true when the asteroid enters the arena.
 } asteroid;
