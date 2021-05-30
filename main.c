@@ -5,6 +5,9 @@
 int screenWidth = 0;
 int screenHeight = 0;
 
+int roundNum = 0;
+int tempRoundNum = 0;
+
 int currentTime = 0;
 float previousTime = 0.0;
 bool firstMouse = true;
@@ -13,7 +16,7 @@ bool gameOver = false;
 keyHandler kh;
 camera cam;
 ship player;
-asteroid tempAsteroid;
+asteroid asteroids[MAX_ASTEROIDS];
 
 void onReshape(int w, int h) {
     glViewport(0, 0, w, h);
@@ -31,7 +34,10 @@ void onReshape(int w, int h) {
 
     initCamera(&cam);
     initShip(&player, &cam);
-    initAsteroid(&tempAsteroid, &player);
+    // initAsteroid(&tempAsteroid, &player);
+    for(int i = 0; i < roundNum; i++) {
+        initAsteroid(&asteroids[i], &player);
+    }
 }
 
 void renderFrame() {
@@ -43,7 +49,10 @@ void renderFrame() {
     drawArena();
     drawAxes();
     drawShip(&player, &cam);
-    drawAsteroid(&tempAsteroid);
+
+    for(int i = 0; i < roundNum; i++) {
+        drawAsteroid(&asteroids[i]);
+    }
 }
 
 void onDisplay() {
@@ -67,7 +76,10 @@ void onIdle() {
     previousTime = currentTime;
     updateGameState(&cam, &player, deltaTime);
 
-    moveAsteroid(&tempAsteroid, deltaTime, 1);
+    // moveAsteroid(&tempAsteroid, deltaTime, 1);
+    for(int i = 0; i < roundNum; i++) {
+        moveAsteroid(&asteroids[i], deltaTime, roundNum);
+    }
 
     glutPostRedisplay();
 }
@@ -95,7 +107,10 @@ void updateGameState(camera *camera, ship *ship, float deltaTime) {
             initGame();
         }
 
-        asteroidWallCollision(&tempAsteroid);
+        for(int i = 0; i < roundNum; i++) {
+            checkActivated(&asteroids[i]);
+            asteroidWallCollision(&asteroids[i]);
+        }
 }
 
 void onKeyPress(unsigned char key, int x, int y) {
@@ -211,21 +226,29 @@ void initKeyHandler() {
 }
 
 void initGame() {
+    // Set the roundNum number to 1.
+    roundNum = 1;
+    tempRoundNum = 1;
+
+    // Since the game is starting, set all keyHandler values to false.
     initKeyHandler();
 
+    // Setting up the window.
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
     glutCreateWindow("Asteroids Arena 3D");
     glutFullScreen();
 
+    // Various glut functions for gameplay.
     glutReshapeFunc(onReshape);
     glutKeyboardFunc(onKeyPress);
     glutKeyboardUpFunc(onKeyUp);
     glutMouseFunc(onMousePress);
     glutPassiveMotionFunc(onMouseMove);
-    
     glutDisplayFunc(onDisplay);
     glutIdleFunc(onIdle);
-    // glutSetCursor(GLUT_CURSOR_NONE);
+
+    // Hide the cursor on screen.
+    glutSetCursor(GLUT_CURSOR_NONE);
 }
 
 int main(int argc, char **argv) {

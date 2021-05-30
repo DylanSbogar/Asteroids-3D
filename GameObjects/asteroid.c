@@ -19,10 +19,13 @@ void initAsteroid(asteroid *asteroid, ship *ship) {
     }
 
     // Set the position of the asteroid.
-    // TODO: Change the hard-coded position
-    asteroid->pos.x = 100;
-    asteroid->pos.y = 100;
-    asteroid->pos.z = 100;
+    // asteroid->pos.x = 100;
+    // asteroid->pos.y = 100;
+    // asteroid->pos.z = 100;
+    float temp = (rand() % 360) / 360 * 2.0 * M_PI;
+    asteroid->pos.x = (ASTEROID_SPAWN_RADIUS * cosf(temp)) * ARENA_RADIUS;
+    asteroid->pos.y = (ASTEROID_SPAWN_RADIUS * sinf(temp)) * ARENA_RADIUS;
+    asteroid->pos.z = (ASTEROID_SPAWN_RADIUS * sinf(temp)) * ARENA_RADIUS; 
 
     // Set the size of the asteroid.
     asteroid->size = rand() % (ASTEROID_MAX_SIZE + 1 - ASTEROID_MIN_SIZE) + ASTEROID_MIN_SIZE;
@@ -37,6 +40,9 @@ void initAsteroid(asteroid *asteroid, ship *ship) {
     asteroid->dir.x = (newVec.x / length);
     asteroid->dir.y = (newVec.y / length);
     asteroid->dir.z = (newVec.z / length);
+
+    // Set to false since asteroids start outside the arena.
+    asteroid->activated = false;
 }
 
 void drawAsteroid(asteroid *asteroid) {
@@ -54,7 +60,7 @@ void drawAsteroid(asteroid *asteroid) {
     glTranslatef(asteroid->pos.x, asteroid->pos.y, asteroid->pos.z);
 
     glPushMatrix();
-    glScalef(asteroid->size, asteroid->size, asteroid->size); // TODO: Replace 10.0 with asteroid->size, since we draw it as a 1x1, then scale to the random size.
+    glScalef(asteroid->size, asteroid->size, asteroid->size);
     //glutSolidCube(1.0);
     int i, j;
     vec3d *v1, *v2;
@@ -81,40 +87,47 @@ void drawAsteroid(asteroid *asteroid) {
 void moveAsteroid(asteroid *asteroid, float deltaTime, int round) {
     vec3d result;
 
-    result.x = asteroid->dir.x * (asteroid->velocity * deltaTime);
-    result.y = asteroid->dir.y * (asteroid->velocity * deltaTime);
-    result.z = asteroid->dir.z * (asteroid->velocity * deltaTime);
+    result.x = asteroid->dir.x * (asteroid->velocity);
+    result.y = asteroid->dir.y * (asteroid->velocity);
+    result.z = asteroid->dir.z * (asteroid->velocity);
+
+    result.x *= deltaTime;
+    result.y *= deltaTime;
+    result.z *= deltaTime;
 
     asteroid->pos.x += result.x;
     asteroid->pos.y += result.y;
     asteroid->pos.z += result.z;
-
-    // asteroid->pos.x -= (deltaTime * (asteroid->velocity));
-    // asteroid->pos.y -= (deltaTime * (asteroid->velocity));
-    // asteroid->pos.z -= (deltaTime * (asteroid->velocity));
 }
 
 bool asteroidWallCollision(asteroid *asteroid) {
-    if(asteroid->pos.x + asteroid->size >= ARENA_RADIUS || asteroid->pos.x + (asteroid->size/2) <= -ARENA_RADIUS) {
-        printf("COLLISION ON X-AXIS\n");
-        asteroid->dir.x = -asteroid->dir.x;
-        // asteroid->dir.y = -asteroid->dir.y;
-        // asteroid->dir.z = -asteroid->dir.z;
-        return true;
+    if(asteroid->activated) {
+        if(asteroid->pos.x + asteroid->size >= ARENA_RADIUS || asteroid->pos.x - asteroid->size <= -ARENA_RADIUS) {
+            asteroid->dir.x = -asteroid->dir.x;
+            return true;
+        }
+        if(asteroid->pos.y + asteroid->size >= ARENA_RADIUS || asteroid->pos.y - asteroid->size <= -ARENA_RADIUS) {
+            asteroid->dir.y = -asteroid->dir.y;
+            return true;
+        }
+        if(asteroid->pos.z + asteroid->size >= ARENA_RADIUS || asteroid->pos.z - asteroid->size <= -ARENA_RADIUS) {
+            asteroid->dir.z = -asteroid->dir.z;
+            return true;
+        } 
     }
-    if(asteroid->pos.y + asteroid->size >= ARENA_RADIUS || asteroid->pos.y + (asteroid->size/2) <= -ARENA_RADIUS) {
-        printf("COLLISION ON Y-AXIS\n");
-        // asteroid->dir.x = -asteroid->dir.x;
-        asteroid->dir.y = -asteroid->dir.y;
-        // asteroid->dir.z = -asteroid->dir.z;
-        return true;
-    }
-    if(asteroid->pos.z + asteroid->size >= ARENA_RADIUS || asteroid->pos.z + (asteroid->size/2) <= -ARENA_RADIUS) {
-        printf("COLLISION ON Z-AXIS\n");
-        // asteroid->dir.x = -asteroid->dir.x;
-        // asteroid->dir.y = -asteroid->dir.y;
-        asteroid->dir.z = -asteroid->dir.z;
-        return true;
-    } 
     return false;
+}
+
+void checkActivated(asteroid *asteroid) {
+    // If the asteroid's x-position is inside the arena.
+    if(asteroid->pos.x + asteroid->size <= ARENA_RADIUS && asteroid->pos.x + asteroid->size >= -ARENA_RADIUS) {
+        // If the asteroid's y-position is inside the arena.
+        if(asteroid->pos.x + asteroid->size <= ARENA_RADIUS && asteroid->pos.x + asteroid->size >= -ARENA_RADIUS) {
+            // If the asteroid's z-position is inside the arena.
+            if(asteroid->pos.x + asteroid->size <= ARENA_RADIUS && asteroid->pos.x + asteroid->size >= -ARENA_RADIUS) {
+                // Activate the asteroid.
+                asteroid->activated = true;
+            }
+        }       
+    }
 }
