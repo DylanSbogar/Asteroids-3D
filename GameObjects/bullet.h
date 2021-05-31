@@ -5,6 +5,10 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+#include "ship.h"
+#include "../Handlers/mathHandler.h"
+#include "../Managers/cameraManager.h"
+
 #if _WIN32
 #include <windows.h>
 #endif
@@ -19,3 +23,17 @@
 #endif
 
 #endif //BULLET_H
+
+#define MAX_BULLETS 20
+typedef struct {
+    vec3d pos;
+    vec3d dir;
+    float velocity;
+    bool activated;
+} bullet;
+
+void initBullet(bullet *bullet, ship *ship, camera *camera);
+
+void moveBullet(bullet *bullet, float deltaTime);
+
+void bulletCollision(bullet *bullet);

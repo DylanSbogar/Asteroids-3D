@@ -16,6 +16,7 @@ bool gameOver = false;
 keyHandler kh;
 camera cam;
 ship player;
+bullet bullets[MAX_BULLETS];
 asteroid asteroids[MAX_ASTEROIDS];
 
 void onReshape(int w, int h) {
@@ -72,16 +73,19 @@ void onDisplay() {
 }
 
 void onIdle() {
+    // Calculate deltaTime.
     currentTime = glutGet(GLUT_ELAPSED_TIME);
     float deltaTime = currentTime - previousTime;
-
     previousTime = currentTime;
+
     updateGameState(&cam, &player, deltaTime);
 
-    // moveAsteroid(&tempAsteroid, deltaTime, 1);
+    // Move all the asteroids.
     for(int i = 0; i < 5; i++) {
         moveAsteroid(&asteroids[i], deltaTime, roundNum);
     }
+
+    moveBullet(&bullets[0]);
 
     glutPostRedisplay();
 }
@@ -94,6 +98,8 @@ void updateGameState(camera *camera, ship *ship, float deltaTime) {
         }
         if(kh.movingBackward) {
             moveCamera(&cam, deltaTime, -1);
+        }
+        if(kh.shootingBullet) {
         }
         if(kh.rollingLeft) {
 
@@ -109,6 +115,7 @@ void updateGameState(camera *camera, ship *ship, float deltaTime) {
             initGame();
         }
 
+        // 'Activate' asteroids as they enter the arena, and perform wall collision checks.
         for(int i = 0; i < 5; i++) {
             checkActivated(&asteroids[i]);
             asteroidWallCollision(&asteroids[i]);
@@ -164,7 +171,10 @@ void onKeyUp(unsigned char key, int x, int y) {
 }
 
 void onMousePress(int state, int button, int x, int y) {
-
+    // If the left mouse button is pressed down.
+    if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+        printf("MOUSE CLICK\n");
+    }
 }
 
 // START INPUT METHODS
