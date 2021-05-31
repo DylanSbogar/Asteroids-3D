@@ -85,8 +85,6 @@ void onIdle() {
         moveAsteroid(&asteroids[i], deltaTime, roundNum);
     }
 
-    moveBullet(&bullets[0]);
-
     glutPostRedisplay();
 }
 
@@ -98,8 +96,6 @@ void updateGameState(camera *camera, ship *ship, float deltaTime) {
         }
         if(kh.movingBackward) {
             moveCamera(&cam, deltaTime, -1);
-        }
-        if(kh.shootingBullet) {
         }
         if(kh.rollingLeft) {
 
