@@ -19,6 +19,12 @@ ship player;
 bullet bullets[MAX_BULLETS];
 asteroid asteroids[MAX_ASTEROIDS];
 
+void placeCamera(camera *camera) {
+      gluLookAt(camera->pos.x, camera->pos.y, camera->pos.z,
+            player.pos.x + camera->front.x, player.pos.y + camera->front.y, player.pos.z + camera->front.z,
+            0, 1, 0);
+}
+
 void onReshape(int w, int h) {
     glViewport(0, 0, w, h);
 
@@ -51,11 +57,17 @@ void renderFrame() {
     placeCamera(&cam);
     drawArena();
     // drawAxes();
-    drawShip(&player, &cam);
+    drawShip(&player, cam.yaw, cam.roll, cam.pitch);
 
     for(int i = 0; i < 5; i++) {
         drawAsteroid(&asteroids[i]);
     }
+}
+
+void updateCameraPosition(camera *camera, float deltaTime) {
+    camera->pos.x = player.pos.x - 20 * cos(camera->yaw * M_PI/180);
+    camera->pos.y = player.pos.y + 10;
+    camera->pos.z = player.pos.z - 20 * sin(camera->yaw * M_PI/180);
 }
 
 void onDisplay() {
@@ -78,6 +90,7 @@ void onIdle() {
     float deltaTime = currentTime - previousTime;
     previousTime = currentTime;
 
+    // updateCameraPosition(&cam, deltaTime);
     updateGameState(&cam, &player, deltaTime);
 
     // Move all the asteroids.
@@ -90,12 +103,12 @@ void onIdle() {
 
 void updateGameState(camera *camera, ship *ship, float deltaTime) {
         if(kh.movingForward) {
-            moveCamera(&cam, deltaTime, 1);
-            moveShip(&player, deltaTime, &cam);
-
+            moveShip(&player, deltaTime, 1);
+            moveCamera(&cam, deltaTime, 1, &ship->pos);
         }
         if(kh.movingBackward) {
-            moveCamera(&cam, deltaTime, -1);
+            moveShip(&player, deltaTime, -1);
+            moveCamera(&cam, deltaTime, -1, &ship->pos);
         }
         if(kh.rollingLeft) {
 
@@ -212,6 +225,7 @@ void onMouseMove(int x, int y) {
     front.y = sin(DEG_TO_RAD(cam.pitch));
     front.z = sin(DEG_TO_RAD(cam.yaw)) * cos(DEG_TO_RAD(cam.pitch));
     cam.front = normalise(front);
+    player.dir = normalise(front);
 
 
     // If the cursor reaches the edge of the screen, place it back in the center.

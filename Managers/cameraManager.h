@@ -37,6 +37,6 @@ void initCamera(camera *camera);
 
 void placeCamera(camera *camera);
 
-void moveCamera(camera *camera, float deltaTime, int turnValue);
+void moveCamera(camera *camera, float deltaTime, int turnValue, vec3d *ship);
 
 #endif //CAMERA_MANAGER_H

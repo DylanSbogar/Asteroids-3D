@@ -35,8 +35,8 @@ typedef struct {
 
 void initShip(ship *ship, camera *camera);
 
-void drawShip(ship *ship, camera *camera);
+void drawShip(ship *ship, float yaw, float roll, float pitch);
 
-void moveShip(ship *ship, float deltaTime, camera *camera);
+void moveShip(ship *ship, float deltaTime, int turnValue);
 
 #endif //SHIP_H

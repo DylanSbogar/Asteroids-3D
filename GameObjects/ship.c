@@ -1,36 +1,31 @@
 #include "ship.h"
 
 void initShip(ship *ship, camera *camera) {
-    ship->pos.x = camera->pos.x + 15;
-    ship->pos.y = camera->pos.y - 3;
-    ship->pos.z = camera->pos.z;
+    ship->pos.x = 0;
+    ship->pos.y = 0;
+    ship->pos.z = 0;
 
     ship->dir.x = 0;
     ship->dir.y = 0;
     ship->dir.z = 0;
 
-    ship->velocity = 1;
+    ship->velocity = 0.05;
 }
 
-void drawShip(ship *ship, camera *camera) {
+void drawShip(ship *ship, float yaw, float roll, float pitch) {
     glPushMatrix();
         glColor3f(1.0, 1.0, 1.0);
-        glTranslatef(camera->pos.x, camera->pos.y, camera->pos.z);
-        glRotatef(-camera->yaw, 0, 1, 0);
-        glRotatef(camera->roll, 1, 0, 0);
-        glRotatef(camera->pitch, 0, 0, 1);
-        glTranslatef(15,-7,0);
+        glTranslatef(ship->pos.x, ship->pos.y, ship->pos.z);
+        glRotatef(-yaw, 0, 1, 0);
+        glRotatef(roll, 1, 0, 0);
+        glRotatef(pitch, 0, 0, 1);
         glScalef(6.0, 2.0, 4.0);
         glutWireCube(1.0);
     glPopMatrix();
 }
 
-void moveShip(ship *ship, float deltaTime, camera *camera) {
-    ship->pos.x = camera->pos.x + 15;
-    ship->pos.y = camera->pos.y - 3;
-    ship->pos.z = camera->pos.z;
-
-    // printf("ship->pos.x = %f\n", ship->pos.x);
-    // printf("ship->pos.y = %f\n", ship->pos.y);
-    // printf("ship->pos.z = %f\n", ship->pos.z);
+void moveShip(ship *ship, float deltaTime, int turnValue) {
+    ship->pos.x += turnValue * (deltaTime * (ship->velocity * ship->dir.x));
+    ship->pos.y += turnValue * (deltaTime * (ship->velocity * ship->dir.y));
+    ship->pos.z += turnValue * (deltaTime * (ship->velocity * ship->dir.z));
 }
