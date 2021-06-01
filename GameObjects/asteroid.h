@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "../Handlers/mathHandler.h"
+#include "../Handlers/global.h"
 #include "arena.h"
 #include "ship.h"
 
@@ -20,14 +21,6 @@
 #include <GL/glu.h>
 #include <GL/glut.h>
 #endif
-
-#define MAX_ASTEROIDS 10
-#define ASTEROID_DIVISIONS 25
-#define ASTEROID_MIN_SIZE 15
-#define ASTEROID_MAX_SIZE 50
-#define ASTEROID_MIN_VELOCITY 25
-#define ASTEROID_MAX_VELOCITY 75
-#define ASTEROID_SPAWN_RADIUS 1.25
 
 typedef struct {
     vec3d vertices[ASTEROID_DIVISIONS + 1][ASTEROID_DIVISIONS + 1];

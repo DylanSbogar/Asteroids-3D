@@ -6,6 +6,7 @@
 #include <stdbool.h>
 
 #include "../Handlers/mathHandler.h"
+#include "../Handlers/global.h"
 
 #if _WIN32
 #include <windows.h>
@@ -22,7 +23,7 @@
 
 #endif //BULLET_H
 
-#define MAX_BULLETS 20
+
 typedef struct {
     vec3d pos;
     vec3d dir;

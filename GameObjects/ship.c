@@ -9,7 +9,8 @@ void initShip(ship *ship) {
     ship->dir.y = 0;
     ship->dir.z = 0;
 
-    ship->velocity = 0.05;
+    // Set the ship velocity to be the same as the camera.
+    ship->velocity = SHIP_VELOCITY;
 }
 
 void drawShip(ship *ship, float yaw, float roll, float pitch) {
@@ -31,14 +32,6 @@ void drawShip(ship *ship, float yaw, float roll, float pitch) {
         glScalef(SHIP_LENGTH, SHIP_LENGTH, SHIP_LENGTH);
         glutWireSphere(1.0, 16, 16);
     glPopMatrix();
-
-    // // Draw the warning debug sphere.
-    // glPushMatrix();
-    //     glColor3f(0.3, 0.0, 0.3);
-    //     glTranslatef(ship->pos.x, ship->pos.y, ship->pos.z);
-    //     glScalef(SHIP_WARNING, SHIP_WARNING, SHIP_WARNING);
-    //     glutWireSphere(1.0, 64, 64);
-    // glPopMatrix();
 }
 
 void moveShip(ship *ship, float deltaTime, int turnValue) {

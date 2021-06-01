@@ -18,4 +18,6 @@
 #include <GL/glut.h>
 #endif
 
+#include "../Handlers/global.h"
+
 #endif //PARTICLE_H

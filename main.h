@@ -12,6 +12,7 @@
 #include "GameObjects/bullet.h"
 #include "GameObjects/arena.h"
 #include "GameObjects/ship.h"
+#include "Handlers/global.h"
 
 #if _WIN32
 #include <windows.h>

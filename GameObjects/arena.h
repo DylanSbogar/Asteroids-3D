@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "../Handlers/mathHandler.h"
+#include "../Handlers/global.h"
 #include "ship.h"
 
 #if _WIN32
@@ -19,9 +20,6 @@
 #include <GL/glu.h>
 #include <GL/glut.h>
 #endif
-
-#define WALL_SEGMENTS 20
-#define ARENA_RADIUS 250
 
 typedef struct {
     vec3d pos;

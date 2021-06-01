@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "../Handlers/mathHandler.h"
+#include "../Handlers/global.h"
 
 #if _WIN32
 #include <windows.h>

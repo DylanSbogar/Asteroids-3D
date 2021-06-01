@@ -11,7 +11,7 @@ void initBullet(bullet *bullet) {
     bullet->dir.z = -1;
 
     // Have the bullet's velocity be 50% faster than the ship's velocity.
-    bullet->velocity = 0.075;
+    bullet->velocity = SHIP_VELOCITY * 1.5;
 
     bullet->activated = false;
 }
