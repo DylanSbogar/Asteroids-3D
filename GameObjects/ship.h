@@ -26,6 +26,10 @@
 #define SHIP_WARNING 2.0
 #define SHIP_COLLISION 1.25
 
+#define SHIP_LENGTH 6
+#define SHIP_WIDTH 4
+#define SHIP_HEIGHT 2
+
 typedef struct {
     vec3d pos;
     vec3d dir;
