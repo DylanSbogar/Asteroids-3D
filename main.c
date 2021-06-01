@@ -42,7 +42,7 @@ void onReshape(int w, int h) {
     srand((unsigned) time(&t));
 
     initCamera(&cam);
-    initShip(&player, &cam);
+    initShip(&player);
     // initAsteroid(&tempAsteroid, &player);
     for(int i = 0; i < 5; i++) {
         initAsteroid(&asteroids[i], &player);

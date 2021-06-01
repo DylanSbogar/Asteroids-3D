@@ -5,7 +5,6 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "../Handlers/mathHandler.h"
-#include "../Managers/cameraManager.h"
 
 #if _WIN32
 #include <windows.h>
@@ -33,7 +32,7 @@ typedef struct {
     float velocity;
 } ship;
 
-void initShip(ship *ship, camera *camera);
+void initShip(ship *ship);
 
 void drawShip(ship *ship, float yaw, float roll, float pitch);
 

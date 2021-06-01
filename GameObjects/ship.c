@@ -1,6 +1,6 @@
 #include "ship.h"
 
-void initShip(ship *ship, camera *camera) {
+void initShip(ship *ship) {
     ship->pos.x = 0;
     ship->pos.y = 0;
     ship->pos.z = 0;
