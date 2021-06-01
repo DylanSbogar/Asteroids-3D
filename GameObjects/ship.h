@@ -23,7 +23,7 @@
 
 #endif
 
-#define SHIP_WARNING 2.0
+#define SHIP_WARNING 10
 #define SHIP_COLLISION 1.25
 
 #define SHIP_LENGTH 6

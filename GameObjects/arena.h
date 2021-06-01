@@ -25,18 +25,16 @@
 
 typedef struct {
     vec3d pos;
-    float colour[];
+    float r, g, b;
 } wall;
 
 void drawAxes();
 
-void initWall(wall *wall);
-
-void drawWall(wall *wall);
+void drawWall(wall *wall, float *colour);
 
 void drawArena();
 
-bool shipWarning(ship *ship);
+void shipWarning(ship *ship);
 
 bool shipCollision(ship *ship);
 

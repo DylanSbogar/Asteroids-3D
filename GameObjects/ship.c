@@ -32,13 +32,13 @@ void drawShip(ship *ship, float yaw, float roll, float pitch) {
         glutWireSphere(1.0, 16, 16);
     glPopMatrix();
 
-    // Draw the warning debug sphere.
-    glPushMatrix();
-        glColor3f(0.3, 0.0, 0.3);
-        glTranslatef(ship->pos.x, ship->pos.y, ship->pos.z);
-        glScalef(SHIP_LENGTH * SHIP_WARNING, SHIP_LENGTH * SHIP_WARNING, SHIP_LENGTH * SHIP_WARNING);
-        glutWireSphere(1.0, 16, 16);
-    glPopMatrix();
+    // // Draw the warning debug sphere.
+    // glPushMatrix();
+    //     glColor3f(0.3, 0.0, 0.3);
+    //     glTranslatef(ship->pos.x, ship->pos.y, ship->pos.z);
+    //     glScalef(SHIP_WARNING, SHIP_WARNING, SHIP_WARNING);
+    //     glutWireSphere(1.0, 64, 64);
+    // glPopMatrix();
 }
 
 void moveShip(ship *ship, float deltaTime, int turnValue) {

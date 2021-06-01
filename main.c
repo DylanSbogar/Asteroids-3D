@@ -18,6 +18,7 @@ camera cam;
 ship player;
 bullet testBullet;
 asteroid asteroids[MAX_ASTEROIDS];
+wall walls[6];
 
 void placeCamera(camera *camera) {
       gluLookAt(camera->pos.x, camera->pos.y, camera->pos.z,
@@ -43,7 +44,7 @@ void onReshape(int w, int h) {
 
     initCamera(&cam);
     initShip(&player);
-    // initAsteroid(&tempAsteroid, &player);
+
     for(int i = 0; i < 5; i++) {
         initAsteroid(&asteroids[i], &player);
     }
@@ -57,6 +58,7 @@ void renderFrame() {
 
      //TODO: Put draw methods here.
     placeCamera(&cam);
+    shipWarning(&player);
     drawArena();
     // drawAxes();
     drawShip(&player, cam.yaw, cam.roll, cam.pitch);
