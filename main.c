@@ -16,7 +16,7 @@ bool gameOver = false;
 keyHandler kh;
 camera cam;
 ship player;
-bullet bullets[MAX_BULLETS];
+bullet testBullet;
 asteroid asteroids[MAX_ASTEROIDS];
 
 void placeCamera(camera *camera) {
@@ -47,6 +47,8 @@ void onReshape(int w, int h) {
     for(int i = 0; i < 5; i++) {
         initAsteroid(&asteroids[i], &player);
     }
+
+    initBullet(&testBullet, &player, &cam);
 }
 
 void renderFrame() {
@@ -62,6 +64,8 @@ void renderFrame() {
     for(int i = 0; i < 5; i++) {
         drawAsteroid(&asteroids[i]);
     }
+
+    drawBullet(&testBullet);
 }
 
 void updateCameraPosition(camera *camera, float deltaTime) {
@@ -105,13 +109,21 @@ void updateGameState(camera *camera, ship *ship, float deltaTime) {
         if(kh.movingForward) {
             moveShip(&player, deltaTime, 1);
             moveCamera(&cam, deltaTime, 1, &ship->pos);
+
+            testBullet.pos.x = ship->pos.x;
+            testBullet.pos.y = ship->pos.y;
+            testBullet.pos.z = ship->pos.z;
         }
         if(kh.movingBackward) {
             moveShip(&player, deltaTime, -1);
             moveCamera(&cam, deltaTime, -1, &ship->pos);
+
+            testBullet.pos.x = ship->pos.x;
+            testBullet.pos.y = ship->pos.y;
+            testBullet.pos.z = ship->pos.z;
         }
         if(kh.rollingLeft) {
-
+            moveBullet(&testBullet, deltaTime, ship->dir);
         }
         if(kh.rollingRight) {
 

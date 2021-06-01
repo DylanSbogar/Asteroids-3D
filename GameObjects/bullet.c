@@ -10,17 +10,26 @@ void initBullet(bullet *bullet, ship *ship, camera *camera) {
     bullet->dir.y = camera->pos.y + camera->front.y;
     bullet->dir.z = camera->pos.z + camera->front.z;
 
-    bullet->velocity = 1;
+    bullet->velocity = 0.05;
 
     bullet->activated = false;
 }
 
-void moveBullet(bullet *bullet, float deltaTime) {
+void drawBullet(bullet *bullet) {
+    glPushMatrix();
+        glColor3f(0.0, 1.0, 0.0);
+        glTranslatef(bullet->pos.x, bullet->pos.y, bullet->pos.z);
+        glScalef(0.5, 0.5, 0.5);
+        glutSolidSphere(1.0, 16, 16);
+    glPopMatrix();
+}
+
+void moveBullet(bullet *bullet, float deltaTime, vec3d dir) {
     vec3d result;
 
-    result.x = bullet->dir.x * (bullet->velocity);
-    result.y = bullet->dir.y * (bullet->velocity);
-    result.z = bullet->dir.z * (bullet->velocity);
+    result.x = dir.x * (bullet->velocity);
+    result.y = dir.y * (bullet->velocity);
+    result.z = dir.z * (bullet->velocity);
 
     result.x *= deltaTime;
     result.y *= deltaTime;

@@ -34,6 +34,8 @@ typedef struct {
 
 void initBullet(bullet *bullet, ship *ship, camera *camera);
 
-void moveBullet(bullet *bullet, float deltaTime);
+void drawBullet(bullet *bullet);
+
+void moveBullet(bullet *bullet, float deltaTime, vec3d dir);
 
 void bulletCollision(bullet *bullet);
