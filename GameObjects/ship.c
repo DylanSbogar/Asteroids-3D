@@ -33,7 +33,6 @@ void drawShip(ship *ship, float yaw, float roll, float pitch) {
     glPopMatrix();
 
     // Draw the warning debug sphere.
-    // Draw the collision debug sphere.
     glPushMatrix();
         glColor3f(0.3, 0.0, 0.3);
         glTranslatef(ship->pos.x, ship->pos.y, ship->pos.z);

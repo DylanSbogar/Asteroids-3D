@@ -5,9 +5,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-#include "ship.h"
 #include "../Handlers/mathHandler.h"
-#include "../Managers/cameraManager.h"
 
 #if _WIN32
 #include <windows.h>
@@ -32,7 +30,7 @@ typedef struct {
     bool activated;
 } bullet;
 
-void initBullet(bullet *bullet, ship *ship, camera *camera);
+void initBullet(bullet *bullet);
 
 void drawBullet(bullet *bullet);
 

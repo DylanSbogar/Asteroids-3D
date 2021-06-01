@@ -1,21 +1,23 @@
 #include "bullet.h"
 
-void initBullet(bullet *bullet, ship *ship, camera *camera) {
+void initBullet(bullet *bullet) {
     // Set up the bullet.
-    bullet->pos.x = ship->pos.x;
-    bullet->pos.y = ship->pos.y;
-    bullet->pos.z = ship->pos.z;
+    bullet->pos.x = 0;
+    bullet->pos.y = 0;
+    bullet->pos.z = 0;
 
-    bullet->dir.x = camera->pos.x + camera->front.x;
-    bullet->dir.y = camera->pos.y + camera->front.y;
-    bullet->dir.z = camera->pos.z + camera->front.z;
+    bullet->dir.x = 0;
+    bullet->dir.y = 0;
+    bullet->dir.z = -1;
 
-    bullet->velocity = 0.05;
+    // Have the bullet's velocity be 50% faster than the ship's velocity.
+    bullet->velocity = 0.075;
 
     bullet->activated = false;
 }
 
 void drawBullet(bullet *bullet) {
+    // Draw a glutSolidSphere at the bullet's current position, and scale.
     glPushMatrix();
         glColor3f(0.0, 1.0, 0.0);
         glTranslatef(bullet->pos.x, bullet->pos.y, bullet->pos.z);
@@ -25,18 +27,8 @@ void drawBullet(bullet *bullet) {
 }
 
 void moveBullet(bullet *bullet, float deltaTime, vec3d dir) {
-    vec3d result;
-
-    result.x = dir.x * (bullet->velocity);
-    result.y = dir.y * (bullet->velocity);
-    result.z = dir.z * (bullet->velocity);
-
-    result.x *= deltaTime;
-    result.y *= deltaTime;
-    result.z *= deltaTime;
-
-    bullet->pos.x += result.x;
-    bullet->pos.y += result.y;
-    bullet->pos.z += result.z;
+    // Calculate the bullet's next position.
+    bullet->pos.x += deltaTime * (bullet->velocity * dir.x);
+    bullet->pos.y += deltaTime * (bullet->velocity * dir.y);
+    bullet->pos.z += deltaTime * (bullet->velocity * dir.z);
 }
-

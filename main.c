@@ -48,7 +48,7 @@ void onReshape(int w, int h) {
         initAsteroid(&asteroids[i], &player);
     }
 
-    initBullet(&testBullet, &player, &cam);
+    initBullet(&testBullet);
 }
 
 void renderFrame() {
