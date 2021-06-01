@@ -87,34 +87,34 @@ bool shipWarning(ship *ship) {
         return true;
     }
 
-    if(ship->pos.y + (6 * SHIP_WARNING) >= ARENA_RADIUS || ship->pos.y + (6 * SHIP_COLLISION) <= -ARENA_RADIUS ) {
+    if(ship->pos.y + (SHIP_LENGTH * SHIP_WARNING) >= ARENA_RADIUS || ship->pos.y + (SHIP_LENGTH * SHIP_COLLISION) <= -ARENA_RADIUS ) {
         printf("ship->pos.x = %f\n", ship->pos.x);
         printf("ship->pos.y = %f\n", ship->pos.y);
         printf("ship->pos.z = %f\n", ship->pos.z);
         return true;
     }
 
-    if(ship->pos.z + (6 * SHIP_WARNING) >= ARENA_RADIUS || ship->pos.z + (6 * SHIP_COLLISION) <= -ARENA_RADIUS ) {
+    if(ship->pos.z + (SHIP_LENGTH * SHIP_WARNING) >= ARENA_RADIUS || ship->pos.z + (SHIP_LENGTH * SHIP_COLLISION) <= -ARENA_RADIUS ) {
         printf("ship->pos.x = %f\n", ship->pos.x);
         printf("ship->pos.y = %f\n", ship->pos.y);
         printf("ship->pos.z = %f\n", ship->pos.z);
         return true;
     } 
-    if(ship->pos.x - (6 * SHIP_WARNING) >= ARENA_RADIUS || ship->pos.x - (6 * SHIP_COLLISION) <= -ARENA_RADIUS ) {
+    if(ship->pos.x - (SHIP_LENGTH * SHIP_WARNING) >= ARENA_RADIUS || ship->pos.x - (SHIP_LENGTH * SHIP_COLLISION) <= -ARENA_RADIUS ) {
         printf("ship->pos.x = %f\n", ship->pos.x);
         printf("ship->pos.y = %f\n", ship->pos.y);
         printf("ship->pos.z = %f\n", ship->pos.z);
         return true;
     }
 
-    if(ship->pos.y - (6 * SHIP_WARNING) >= ARENA_RADIUS || ship->pos.y - (6 * SHIP_COLLISION) <= -ARENA_RADIUS ) {
+    if(ship->pos.y - (SHIP_LENGTH * SHIP_WARNING) >= ARENA_RADIUS || ship->pos.y - (SHIP_LENGTH * SHIP_COLLISION) <= -ARENA_RADIUS ) {
         printf("ship->pos.x = %f\n", ship->pos.x);
         printf("ship->pos.y = %f\n", ship->pos.y);
         printf("ship->pos.z = %f\n", ship->pos.z);
         return true;
     }
 
-    if(ship->pos.z - (6 * SHIP_WARNING) >= ARENA_RADIUS || ship->pos.z - (6 * SHIP_COLLISION) <= -ARENA_RADIUS ) {
+    if(ship->pos.z - (SHIP_LENGTH * SHIP_WARNING) >= ARENA_RADIUS || ship->pos.z - (SHIP_LENGTH * SHIP_COLLISION) <= -ARENA_RADIUS ) {
         printf("ship->pos.x = %f\n", ship->pos.x);
         printf("ship->pos.y = %f\n", ship->pos.y);
         printf("ship->pos.z = %f\n", ship->pos.z);
@@ -125,15 +125,15 @@ bool shipWarning(ship *ship) {
 
 // TODO: Change the hard coded number 6 to match the ships rough length, once model loading is complete.
 bool shipCollision(ship *ship) {
-    if(ship->pos.x + (6 * SHIP_COLLISION) >= ARENA_RADIUS || ship->pos.x + (6 * SHIP_COLLISION) <= -ARENA_RADIUS ) {
+    if(ship->pos.x + (SHIP_LENGTH) >= ARENA_RADIUS || ship->pos.x + (SHIP_LENGTH) <= -ARENA_RADIUS ) {
         return true;
     }
 
-    if(ship->pos.y + (6 * SHIP_COLLISION) >= ARENA_RADIUS || ship->pos.y + (6 * SHIP_COLLISION) <= -ARENA_RADIUS ) {
+    if(ship->pos.y + (SHIP_LENGTH) >= ARENA_RADIUS || ship->pos.y + (SHIP_LENGTH) <= -ARENA_RADIUS ) {
         return true;
     }
 
-    if(ship->pos.z + (6 * SHIP_COLLISION) >= ARENA_RADIUS || ship->pos.z + (6 * SHIP_COLLISION) <= -ARENA_RADIUS ) {
+    if(ship->pos.z + (SHIP_LENGTH) >= ARENA_RADIUS || ship->pos.z + (SHIP_LENGTH) <= -ARENA_RADIUS ) {
         return true;
     }
     return false;
