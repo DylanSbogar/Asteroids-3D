@@ -33,7 +33,7 @@ typedef struct {
 
 #define PYTHAGORAS(x, y, z) (sqrt(pow(x,2) + pow(y,2) + pow(z,2)))
 
-static inline vec3d directionBetweenPoints(vec3d source, vec3d target) {
+static inline vec3d distanceBetweenPoints(vec3d source, vec3d target) {
     vec3d result;
 
     result.x = target.x - source.x;

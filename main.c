@@ -139,6 +139,11 @@ void updateGameState(camera *camera, ship *ship, float deltaTime) {
         for(int i = 0; i < 5; i++) {
             checkActivated(&asteroids[i]);
             asteroidWallCollision(&asteroids[i]);
+            bulletAsteroidCollision(&testBullet, &asteroids[i]);
+            
+            if(asteroidShipCollision(&player, &asteroids[i])) {
+                initGame();
+            }
         }
 
         bulletCollision(&testBullet);

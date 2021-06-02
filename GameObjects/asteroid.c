@@ -17,7 +17,7 @@ void initAsteroid(asteroid *asteroid, ship *ship) {
     asteroid->velocity = rand() % (ASTEROID_MAX_VELOCITY + 1 - ASTEROID_MIN_VELOCITY) + ASTEROID_MIN_VELOCITY;
     asteroid->velocity /= 1000;
 
-    vec3d newVec = directionBetweenPoints(asteroid->pos, ship->pos);
+    vec3d newVec = distanceBetweenPoints(asteroid->pos, ship->pos);
     float length = PYTHAGORAS(newVec.x, newVec.y, newVec.z);
 
     asteroid->dir.x = (newVec.x / length);
@@ -89,5 +89,16 @@ void checkActivated(asteroid *asteroid) {
     && (asteroid->pos.y - asteroid->size > -ARENA_RADIUS && asteroid->pos.y + asteroid->size < ARENA_RADIUS) 
     && (asteroid->pos.z - asteroid->size > -ARENA_RADIUS && asteroid->pos.z + asteroid->size < ARENA_RADIUS)) {
         asteroid->activated = true;
+    }
+}
+
+bool asteroidShipCollision(ship *ship, asteroid *asteroid) {
+    vec3d result = distanceBetweenPoints(ship->pos, asteroid->pos);
+    float length = PYTHAGORAS(result.x, result.y, result.z);
+
+    if(length < asteroid->size + SHIP_LENGTH) {
+        return true;
+    } else {
+        return false;
     }
 }

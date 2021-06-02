@@ -5,7 +5,7 @@
 #define ARENA_RADIUS 500
 
 #define MAX_BULLETS 20
-#define BULLET_RADIUS 0.5
+#define BULLET_RADIUS 1
 
 #define SHIP_VELOCITY 0.05
 #define SHIP_WARNING 20

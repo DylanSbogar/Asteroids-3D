@@ -44,17 +44,32 @@ void bulletCollision(bullet *bullet) {
         bullet->g = 1;
         bullet->b = 0;
         if(bullet->pos.x + bullet->size >= ARENA_RADIUS || bullet->pos.x - bullet->size <= -ARENA_RADIUS) {
-            bullet->dir.x = -bullet->dir.x;
+            bullet->activated = false;
+            // bullet->dir.x = -bullet->dir.x; // bounce
         }
         if(bullet->pos.y + bullet->size >= ARENA_RADIUS || bullet->pos.y - bullet->size <= -ARENA_RADIUS) {
-            bullet->dir.y = -bullet->dir.y;
+            bullet->activated = false;
+            // bullet->dir.y = -bullet->dir.y; // bounce
         }
         if(bullet->pos.z + bullet->size >= ARENA_RADIUS || bullet->pos.z - bullet->size <= -ARENA_RADIUS) {
-            bullet->dir.z = -bullet->dir.z;
+            bullet->activated = false;
+            // bullet->dir.z = -bullet->dir.z; // bounce
         } 
     } else {
         bullet->r = 1;
         bullet->g = 1;
         bullet->b = 1;
+    }
+}
+
+void bulletAsteroidCollision(bullet *bullet, asteroid *asteroid) {
+    // Get the distance between the bullet and the asteroid.
+    vec3d result = distanceBetweenPoints(bullet->pos, asteroid->pos);
+    float length = PYTHAGORAS(result.x, result.y, result.z);
+
+    if(length < asteroid->size + SHIP_LENGTH) {
+        asteroid->velocity = 0;
+        asteroid->r = 0, asteroid->g = 0, asteroid->b = 1;
+        bullet->activated = false;
     }
 }

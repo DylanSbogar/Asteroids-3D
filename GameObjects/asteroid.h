@@ -43,4 +43,6 @@ bool asteroidWallCollision(asteroid *asteroid);
 
 void checkActivated(asteroid *asteroid);
 
+bool asteroidShipCollision(ship *ship, asteroid *asteroid);
+
 #endif //ASTEROID_H

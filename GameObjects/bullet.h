@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+#include "../GameObjects/asteroid.h"
 #include "../GameObjects/ship.h"
 #include "../Handlers/mathHandler.h"
 #include "../Handlers/global.h"
@@ -42,3 +43,5 @@ void drawBullet(bullet *bullet);
 void moveBullet(bullet *bullet, float deltaTime);
 
 void bulletCollision(bullet *bullet);
+
+void bulletAsteroidCollision(bullet *bullet, asteroid *asteroid);
