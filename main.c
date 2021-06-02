@@ -36,7 +36,7 @@ void onReshape(int w, int h) {
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(90.0, aspectRatio, 1.0, 1000.0);
+    gluPerspective(90.0, aspectRatio, 1.0, 2000.0);
 
     // Initialise the random number generator.
     time_t t;
@@ -48,8 +48,6 @@ void onReshape(int w, int h) {
     for(int i = 0; i < 5; i++) {
         initAsteroid(&asteroids[i], &player);
     }
-
-    initBullet(&testBullet);
 }
 
 void renderFrame() {
@@ -67,7 +65,9 @@ void renderFrame() {
         drawAsteroid(&asteroids[i]);
     }
 
-    drawBullet(&testBullet);
+    if(testBullet.activated) {
+        drawBullet(&testBullet);
+    }
 }
 
 void updateCameraPosition(camera *camera, float deltaTime) {
@@ -97,6 +97,7 @@ void onIdle() {
     previousTime = currentTime;
 
     // updateCameraPosition(&cam, deltaTime);
+    moveCamera(&cam, deltaTime, 1, &player.pos);
     updateGameState(&cam, &player, deltaTime);
 
     // Move all the asteroids.
@@ -111,21 +112,14 @@ void updateGameState(camera *camera, ship *ship, float deltaTime) {
         if(kh.movingForward) {
             moveShip(&player, deltaTime, 1);
             moveCamera(&cam, deltaTime, 1, &ship->pos);
-
-            testBullet.pos.x = ship->pos.x;
-            testBullet.pos.y = ship->pos.y;
-            testBullet.pos.z = ship->pos.z;
         }
         if(kh.movingBackward) {
             moveShip(&player, deltaTime, -1);
             moveCamera(&cam, deltaTime, -1, &ship->pos);
-
-            testBullet.pos.x = ship->pos.x;
-            testBullet.pos.y = ship->pos.y;
-            testBullet.pos.z = ship->pos.z;
         }
         if(kh.rollingLeft) {
-            moveBullet(&testBullet, deltaTime, ship->dir);
+            initBullet(&testBullet, &player);
+            testBullet.activated = true;
         }
         if(kh.rollingRight) {
 
@@ -137,12 +131,17 @@ void updateGameState(camera *camera, ship *ship, float deltaTime) {
         if(shipCollision(&player)) {
             initGame();
         }
+        if(testBullet.activated) {
+            moveBullet(&testBullet, deltaTime);
+        }
 
         // 'Activate' asteroids as they enter the arena, and perform wall collision checks.
         for(int i = 0; i < 5; i++) {
             checkActivated(&asteroids[i]);
             asteroidWallCollision(&asteroids[i]);
         }
+
+        bulletCollision(&testBullet);
 }
 
 void onKeyPress(unsigned char key, int x, int y) {
@@ -226,7 +225,7 @@ void onMouseMove(int x, int y) {
     cam.pitch += yOffset;
 
     // Set a limiter for the pitch of the camera.
-    int limit = 45;
+    float limit = 62.5;
     if (cam.pitch > limit) {
         cam.pitch = limit;
     } else if (cam.pitch < -limit) {

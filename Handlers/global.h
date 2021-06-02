@@ -2,12 +2,13 @@
 #define GLOBAL_H
 
 #define WALL_SEGMENTS 20
-#define ARENA_RADIUS 250
+#define ARENA_RADIUS 500
 
 #define MAX_BULLETS 20
+#define BULLET_RADIUS 0.5
 
 #define SHIP_VELOCITY 0.05
-#define SHIP_WARNING 10
+#define SHIP_WARNING 20
 #define SHIP_COLLISION 1.25
 
 #define SHIP_LENGTH 6

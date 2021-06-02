@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+#include "../GameObjects/ship.h"
 #include "../Handlers/mathHandler.h"
 #include "../Handlers/global.h"
 
@@ -27,14 +28,17 @@
 typedef struct {
     vec3d pos;
     vec3d dir;
+    float size;
     float velocity;
     bool activated;
+
+    float r, g, b;
 } bullet;
 
-void initBullet(bullet *bullet);
+void initBullet(bullet *bullet, ship *ship);
 
 void drawBullet(bullet *bullet);
 
-void moveBullet(bullet *bullet, float deltaTime, vec3d dir);
+void moveBullet(bullet *bullet, float deltaTime);
 
 void bulletCollision(bullet *bullet);
