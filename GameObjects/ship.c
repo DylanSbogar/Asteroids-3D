@@ -16,7 +16,7 @@ void initShip(ship *ship) {
 void drawShip(ship *ship, float yaw, float roll, float pitch) {
     // Draw the body.
     glPushMatrix();
-        glColor3f(1.0, 1.0, 1.0);
+        glColor3f(1.0, 0.0, 1.0);
         glTranslatef(ship->pos.x, ship->pos.y, ship->pos.z);
         glRotatef(-yaw, 0, 1, 0);
         glRotatef(roll, 1, 0, 0);
@@ -26,12 +26,12 @@ void drawShip(ship *ship, float yaw, float roll, float pitch) {
     glPopMatrix();
 
     // Draw the collision debug sphere.
-    glPushMatrix();
-        glColor3f(0.0, 0.0, 0.3);
-        glTranslatef(ship->pos.x, ship->pos.y, ship->pos.z);
-        glScalef(SHIP_LENGTH, SHIP_LENGTH, SHIP_LENGTH);
-        glutWireSphere(1.0, 16, 16);
-    glPopMatrix();
+    // glPushMatrix();
+    //     glColor3f(0.0, 0.0, 0.3);
+    //     glTranslatef(ship->pos.x, ship->pos.y, ship->pos.z);
+    //     glScalef(SHIP_LENGTH, SHIP_LENGTH, SHIP_LENGTH);
+    //     glutWireSphere(1.0, 16, 16);
+    // glPopMatrix();
 }
 
 void moveShip(ship *ship, float deltaTime, int turnValue) {

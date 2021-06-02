@@ -17,13 +17,12 @@ keyHandler kh;
 camera cam;
 ship player;
 bullet testBullet;
-asteroid asteroids[MAX_ASTEROIDS];
-wall walls[6];
+asteroid asteroids[MAX_ROUNDS];
 
 void placeCamera(camera *camera) {
-      gluLookAt(camera->pos.x, camera->pos.y, camera->pos.z,
-            player.pos.x + camera->front.x, player.pos.y + camera->front.y, player.pos.z + camera->front.z,
-            0, 1, 0);
+    gluLookAt(camera->pos.x, camera->pos.y, camera->pos.z,
+        player.pos.x + camera->front.x, player.pos.y + camera->front.y, player.pos.z + camera->front.z,
+        0, 1, 0);
 }
 
 void onReshape(int w, int h) {
@@ -73,20 +72,21 @@ void renderFrame() {
 }
 
 void updateCameraPosition(camera *camera, float deltaTime) {
-    camera->pos.x = player.pos.x - 20 * cos(camera->yaw * M_PI/180);
+    camera->pos.x = player.pos.x - 20 * cos(DEG_TO_RAD(camera->yaw));
     camera->pos.y = player.pos.y + 10;
-    camera->pos.z = player.pos.z - 20 * sin(camera->yaw * M_PI/180);
+    camera->pos.z = player.pos.z - 20 * sin(DEG_TO_RAD(camera->yaw));
 }
 
 void onDisplay() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST);
 
-
+    // Handles all drawing functionality.
     renderFrame();
 
-
     glutSwapBuffers();
+
+    // Check for errors.
     int err;
     while ((err = glGetError()) != GL_NO_ERROR)
         printf("Error: %s\n", gluErrorString(err));
@@ -98,7 +98,7 @@ void onIdle() {
     float deltaTime = currentTime - previousTime;
     previousTime = currentTime;
 
-    // updateCameraPosition(&cam, deltaTime);
+    // Perform idle checks for when the player is not moving (moving camera, asteroids)
     moveCamera(&cam, deltaTime, 1, &player.pos);
     updateGameState(&cam, &player, deltaTime);
 
@@ -124,7 +124,6 @@ void updateGameState(camera *camera, ship *ship, float deltaTime) {
     if(kh.restartGame) {
         initGame();
     }
-
     if(shipCollision(&player)) {
         initGame();
     }
@@ -138,23 +137,33 @@ void updateGameState(camera *camera, ship *ship, float deltaTime) {
     // Used to calculate when the round ends.
     roundOver = true;
 
-    // 'Activate' asteroids as they enter the arena, and perform wall collision checks.
     for(int i = 0; i < roundNum; i++) {
+        // 'Activate' asteroids as they enter the arena, and perform wall collision checks.
         checkActivated(&asteroids[i]);
+
+        // Check whether any of the asteroids are ready to bounce off the walls.
         asteroidWallCollision(&asteroids[i]);
+        
+        // Check whether a bullet has destroyed any of the asteroids.
         bulletAsteroidCollision(&testBullet, &asteroids[i]);
-            
+        
+        // If the ship has collided with an asteroid, end the game.
         if(asteroidShipCollision(&player, &asteroids[i])) {
+            // TODO: Replace with restartGame().
             initGame();
         }
 
+        // If any asteroids are still alive, the round is not over.
         if(asteroids[i].alive) {
             roundOver = false;
         }
     }
 
+    // If all asteroids are dead and the round is over.
     if(roundOver) {
         roundNum++;
+
+        // TODO: Wait 5 seconds before starting the next wave.
 
         // Create x amount of new asteroids corresponding with the round number.
         for(int i = 0; i < roundNum; i++)
@@ -215,8 +224,11 @@ void onKeyUp(unsigned char key, int x, int y) {
 void onMousePress(int state, int button, int x, int y) {
     // If the left mouse button is pressed down.
     if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
-        initBullet(&testBullet, &player);
-        testBullet.activated = true;
+        // Only fire if the bullet is not currently fired.
+        if(!testBullet.activated) {
+            initBullet(&testBullet, &player);
+            testBullet.activated = true;
+        }
     }
 }
 

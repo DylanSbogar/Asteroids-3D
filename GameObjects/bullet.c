@@ -40,22 +40,22 @@ void moveBullet(bullet *bullet, float deltaTime) {
 
 void bulletCollision(bullet *bullet) {
     if(bullet->activated) {
+        // TODO: Remove this once textures are working?
         bullet->r = 0;
         bullet->g = 1;
         bullet->b = 0;
+        
         if(bullet->pos.x + bullet->size >= ARENA_RADIUS || bullet->pos.x - bullet->size <= -ARENA_RADIUS) {
             bullet->activated = false;
-            // bullet->dir.x = -bullet->dir.x; // bounce
         }
         if(bullet->pos.y + bullet->size >= ARENA_RADIUS || bullet->pos.y - bullet->size <= -ARENA_RADIUS) {
             bullet->activated = false;
-            // bullet->dir.y = -bullet->dir.y; // bounce
         }
         if(bullet->pos.z + bullet->size >= ARENA_RADIUS || bullet->pos.z - bullet->size <= -ARENA_RADIUS) {
             bullet->activated = false;
-            // bullet->dir.z = -bullet->dir.z; // bounce
         } 
     } else {
+        // TODO: Remove this once textures are working?
         bullet->r = 1;
         bullet->g = 1;
         bullet->b = 1;
@@ -67,9 +67,11 @@ void bulletAsteroidCollision(bullet *bullet, asteroid *asteroid) {
     vec3d result = distanceBetweenPoints(bullet->pos, asteroid->pos);
     float length = PYTHAGORAS(result.x, result.y, result.z);
 
-    if(length < asteroid->size + SHIP_LENGTH) {
-        asteroid->alive = false;
-        bullet->activated = false;
-    } else {
+    // Ensure the asteroid is activated, i.e. fully entered the arena in the case of larger asteroids.
+    if(asteroid->activated) {
+        if(length < asteroid->size + SHIP_LENGTH) {
+            asteroid->alive = false;
+            bullet->activated = false;
+        }
     }
 }

@@ -26,64 +26,61 @@ void initAsteroid(asteroid *asteroid, ship *ship) {
     asteroid->activated = false;
     asteroid->alive = true;
 
-    // DEBUG: Since asteroids start as inactive, colour them red. 
+    // DEBUG: Since asteroids start as inactive, colour them red by default.
+    // TODO: Remove when textures are working??
     asteroid->r = 1;
     asteroid->g = 0;
     asteroid->b = 0;
 }
 
 void drawAsteroid(asteroid *asteroid) {
+    // Drawing the asteroid.
     glPushMatrix();
-    glColor3f(asteroid->r, asteroid->g, asteroid->b);
-    glTranslatef(asteroid->pos.x, asteroid->pos.y, asteroid->pos.z);
-    glScalef(asteroid->size, asteroid->size, asteroid->size);
-    glutSolidSphere(1.0, ASTEROID_DIVISIONS, ASTEROID_DIVISIONS);
+        glColor3f(asteroid->r, asteroid->g, asteroid->b);
+        glTranslatef(asteroid->pos.x, asteroid->pos.y, asteroid->pos.z);
+        glScalef(asteroid->size, asteroid->size, asteroid->size);
+        glutSolidSphere(1.0, ASTEROID_DIVISIONS, ASTEROID_DIVISIONS);
     glPopMatrix();
 }
 
 void moveAsteroid(asteroid *asteroid, float deltaTime, int round) {
-    vec3d result;
-
-    result.x = asteroid->dir.x * (asteroid->velocity);
-    result.y = asteroid->dir.y * (asteroid->velocity);
-    result.z = asteroid->dir.z * (asteroid->velocity);
-
-    result.x *= deltaTime;
-    result.y *= deltaTime;
-    result.z *= deltaTime;
-
-    asteroid->pos.x += result.x;
-    asteroid->pos.y += result.y;
-    asteroid->pos.z += result.z;
+    // Calculate the asteroid's next position.
+    asteroid->pos.x += deltaTime * (asteroid->velocity * asteroid->dir.x);
+    asteroid->pos.y += deltaTime * (asteroid->velocity * asteroid->dir.y);
+    asteroid->pos.z += deltaTime * (asteroid->velocity * asteroid->dir.z);
 }
 
-bool asteroidWallCollision(asteroid *asteroid) {
+void asteroidWallCollision(asteroid *asteroid) {
+    // The asteroid must be fully within the arena (activated) to be able to bounce off the wall.
     if(asteroid->activated) {
+        // TODO: Remove when textures are working?
         asteroid->r = 1;
         asteroid->g = 1;
         asteroid->b = 1;
+        // Check for collisions on the X-Axis walls.
         if(asteroid->pos.x + asteroid->size >= ARENA_RADIUS || asteroid->pos.x - asteroid->size <= -ARENA_RADIUS) {
+            // Invert the asteroid's directional vector on the X-Axis.
             asteroid->dir.x = -asteroid->dir.x;
-            return true;
         }
+        // Check for collisions on the Y-Axis walls.
         if(asteroid->pos.y + asteroid->size >= ARENA_RADIUS || asteroid->pos.y - asteroid->size <= -ARENA_RADIUS) {
-            asteroid->dir.y = -asteroid->dir.y;
-            return true;
+            // Invert the asteroid's directional vector on the Y-Axis.
         }
+        // Check for collisions on the Z-Axis walls.
         if(asteroid->pos.z + asteroid->size >= ARENA_RADIUS || asteroid->pos.z - asteroid->size <= -ARENA_RADIUS) {
+            // Invert the asteroid's directional vector on the Z-Axis.
             asteroid->dir.z = -asteroid->dir.z;
-            return true;
         } 
     } else {
+        // TODO: Remove when textures are working?
         asteroid->r = 1;
         asteroid->g = 0;
         asteroid->b = 0;
     }
-    return false;
 }
 
 void checkActivated(asteroid *asteroid) {
-    // If the asteroid is inside the arena, activate it.
+    // If the asteroid is fully inside the arena, activate it.
     if((asteroid->pos.x - asteroid->size > -ARENA_RADIUS && asteroid->pos.x + asteroid->size < ARENA_RADIUS) 
     && (asteroid->pos.y - asteroid->size > -ARENA_RADIUS && asteroid->pos.y + asteroid->size < ARENA_RADIUS) 
     && (asteroid->pos.z - asteroid->size > -ARENA_RADIUS && asteroid->pos.z + asteroid->size < ARENA_RADIUS)) {
@@ -97,9 +94,12 @@ bool asteroidShipCollision(ship *ship, asteroid *asteroid) {
 
     // Only check collision if the asteroid has not been destroyed.
     if(asteroid->alive) {
+        // If the ship and asteroid are touching, or inside one another.
         if(length < asteroid->size + SHIP_LENGTH) {
+            // A true value will end the game.
             return true;
         } else {
+            // A false value will not end the game.
             return false;
         }
     } else {

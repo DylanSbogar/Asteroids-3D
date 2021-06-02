@@ -40,7 +40,7 @@ void drawAsteroid(asteroid *asteroid);
 
 void moveAsteroid(asteroid *asteroid, float deltaTime, int round);
 
-bool asteroidWallCollision(asteroid *asteroid);
+void asteroidWallCollision(asteroid *asteroid);
 
 void checkActivated(asteroid *asteroid);
 
