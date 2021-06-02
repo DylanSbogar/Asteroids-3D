@@ -1,10 +1,8 @@
 #include "asteroid.h"
 
 void initAsteroid(asteroid *asteroid, ship *ship) {
+
     // Set the position of the asteroid.
-    // asteroid->pos.x = 100;
-    // asteroid->pos.y = 100;
-    // asteroid->pos.z = 100;
     float temp = (rand() % 360) / (double)360 * 2.0 * M_PI;
     asteroid->pos.x = (ASTEROID_SPAWN_RADIUS * cosf(temp)) * ARENA_RADIUS;
     asteroid->pos.y = (ASTEROID_SPAWN_RADIUS * sinf(temp)) * ARENA_RADIUS;
@@ -26,6 +24,7 @@ void initAsteroid(asteroid *asteroid, ship *ship) {
 
     // Set to false since asteroids start outside the arena.
     asteroid->activated = false;
+    asteroid->alive = true;
 
     // DEBUG: Since asteroids start as inactive, colour them red. 
     asteroid->r = 1;
@@ -96,8 +95,13 @@ bool asteroidShipCollision(ship *ship, asteroid *asteroid) {
     vec3d result = distanceBetweenPoints(ship->pos, asteroid->pos);
     float length = PYTHAGORAS(result.x, result.y, result.z);
 
-    if(length < asteroid->size + SHIP_LENGTH) {
-        return true;
+    // Only check collision if the asteroid has not been destroyed.
+    if(asteroid->alive) {
+        if(length < asteroid->size + SHIP_LENGTH) {
+            return true;
+        } else {
+            return false;
+        }
     } else {
         return false;
     }

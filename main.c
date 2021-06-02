@@ -62,7 +62,9 @@ void renderFrame() {
     drawShip(&player, cam.yaw, cam.roll, cam.pitch);
 
     for(int i = 0; i < 5; i++) {
-        drawAsteroid(&asteroids[i]);
+        if(asteroids[i].alive) {
+            drawAsteroid(&asteroids[i]);
+        }
     }
 
     if(testBullet.activated) {
@@ -102,7 +104,9 @@ void onIdle() {
 
     // Move all the asteroids.
     for(int i = 0; i < 5; i++) {
-        moveAsteroid(&asteroids[i], deltaTime, roundNum);
+        if(asteroids[i].alive) {
+            moveAsteroid(&asteroids[i], deltaTime, roundNum);
+        }
     }
 
     glutPostRedisplay();
@@ -118,8 +122,7 @@ void updateGameState(camera *camera, ship *ship, float deltaTime) {
             moveCamera(&cam, deltaTime, -1, &ship->pos);
         }
         if(kh.rollingLeft) {
-            initBullet(&testBullet, &player);
-            testBullet.activated = true;
+
         }
         if(kh.rollingRight) {
 
@@ -200,7 +203,8 @@ void onKeyUp(unsigned char key, int x, int y) {
 void onMousePress(int state, int button, int x, int y) {
     // If the left mouse button is pressed down.
     if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
-        printf("MOUSE CLICK\n");
+        initBullet(&testBullet, &player);
+        testBullet.activated = true;
     }
 }
 

@@ -68,8 +68,8 @@ void bulletAsteroidCollision(bullet *bullet, asteroid *asteroid) {
     float length = PYTHAGORAS(result.x, result.y, result.z);
 
     if(length < asteroid->size + SHIP_LENGTH) {
-        asteroid->velocity = 0;
-        asteroid->r = 0, asteroid->g = 0, asteroid->b = 1;
+        asteroid->alive = false;
         bullet->activated = false;
+    } else {
     }
 }

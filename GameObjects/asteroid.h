@@ -31,6 +31,7 @@ typedef struct {
     float r, g, b; // DEBUG colour of asteroid.
     // float rotateVelocity;
     bool activated; // Is set to true when the asteroid enters the arena.
+    bool alive;
 } asteroid;
 
 void initAsteroid(asteroid *asteroid, ship *ship);
