@@ -6,12 +6,12 @@ int screenWidth = 0;
 int screenHeight = 0;
 
 int roundNum = 0;
-int tempRoundNum = 0;
 
 int currentTime = 0;
 float previousTime = 0.0;
 bool firstMouse = true;
 bool gameOver = false;
+bool roundOver;
 
 keyHandler kh;
 camera cam;
@@ -45,7 +45,7 @@ void onReshape(int w, int h) {
     initCamera(&cam);
     initShip(&player);
 
-    for(int i = 0; i < 5; i++) {
+    for(int i = 0; i < roundNum; i++) {
         initAsteroid(&asteroids[i], &player);
     }
 }
@@ -61,7 +61,7 @@ void renderFrame() {
     // drawAxes();
     drawShip(&player, cam.yaw, cam.roll, cam.pitch);
 
-    for(int i = 0; i < 5; i++) {
+    for(int i = 0; i < roundNum; i++) {
         if(asteroids[i].alive) {
             drawAsteroid(&asteroids[i]);
         }
@@ -103,7 +103,7 @@ void onIdle() {
     updateGameState(&cam, &player, deltaTime);
 
     // Move all the asteroids.
-    for(int i = 0; i < 5; i++) {
+    for(int i = 0; i < roundNum; i++) {
         if(asteroids[i].alive) {
             moveAsteroid(&asteroids[i], deltaTime, roundNum);
         }
@@ -113,43 +113,55 @@ void onIdle() {
 }
 
 void updateGameState(camera *camera, ship *ship, float deltaTime) {
-        if(kh.movingForward) {
-            moveShip(&player, deltaTime, 1);
-            moveCamera(&cam, deltaTime, 1, &ship->pos);
-        }
-        if(kh.movingBackward) {
-            moveShip(&player, deltaTime, -1);
-            moveCamera(&cam, deltaTime, -1, &ship->pos);
-        }
-        if(kh.rollingLeft) {
+    if(kh.movingForward) {
+        moveShip(&player, deltaTime, 1);
+        moveCamera(&cam, deltaTime, 1, &ship->pos);
+    }
+    if(kh.movingBackward) {
+        moveShip(&player, deltaTime, -1);
+        moveCamera(&cam, deltaTime, -1, &ship->pos);
+    }
+    if(kh.restartGame) {
+        initGame();
+    }
 
-        }
-        if(kh.rollingRight) {
+    if(shipCollision(&player)) {
+        initGame();
+    }
+    if(testBullet.activated) {
+        moveBullet(&testBullet, deltaTime);
+    }
 
-        }
-        if(kh.restartGame) {
-            initGame();
-        }
+    // Check if the bullet collides with the wall.
+    bulletCollision(&testBullet);
 
-        if(shipCollision(&player)) {
-            initGame();
-        }
-        if(testBullet.activated) {
-            moveBullet(&testBullet, deltaTime);
-        }
+    // Used to calculate when the round ends.
+    roundOver = true;
 
-        // 'Activate' asteroids as they enter the arena, and perform wall collision checks.
-        for(int i = 0; i < 5; i++) {
-            checkActivated(&asteroids[i]);
-            asteroidWallCollision(&asteroids[i]);
-            bulletAsteroidCollision(&testBullet, &asteroids[i]);
+    // 'Activate' asteroids as they enter the arena, and perform wall collision checks.
+    for(int i = 0; i < roundNum; i++) {
+        checkActivated(&asteroids[i]);
+        asteroidWallCollision(&asteroids[i]);
+        bulletAsteroidCollision(&testBullet, &asteroids[i]);
             
-            if(asteroidShipCollision(&player, &asteroids[i])) {
-                initGame();
-            }
+        if(asteroidShipCollision(&player, &asteroids[i])) {
+            initGame();
         }
 
-        bulletCollision(&testBullet);
+        if(asteroids[i].alive) {
+            roundOver = false;
+        }
+    }
+
+    if(roundOver) {
+        roundNum++;
+
+        // Create x amount of new asteroids corresponding with the round number.
+        for(int i = 0; i < roundNum; i++)
+        {
+            initAsteroid(&asteroids[i], &player);
+        }
+    }
 }
 
 void onKeyPress(unsigned char key, int x, int y) {
@@ -272,7 +284,6 @@ void initKeyHandler() {
 void initGame() {
     // Set the roundNum number to 1.
     roundNum = 1;
-    tempRoundNum = 1;
 
     // Since the game is starting, set all keyHandler values to false.
     initKeyHandler();

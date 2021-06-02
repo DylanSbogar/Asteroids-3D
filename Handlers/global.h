@@ -2,7 +2,7 @@
 #define GLOBAL_H
 
 #define WALL_SEGMENTS 20
-#define ARENA_RADIUS 250
+#define ARENA_RADIUS 350
 
 #define MAX_BULLETS 20
 #define BULLET_RADIUS 1
