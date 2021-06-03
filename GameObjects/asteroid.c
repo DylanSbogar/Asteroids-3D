@@ -31,12 +31,6 @@ void initAsteroid(asteroid *asteroid, ship *ship) {
     asteroid->activated = false;
     asteroid->alive = true;
 
-    // DEBUG: Since asteroids start as inactive, colour them red by default.
-    // TODO: Remove when textures are working??
-    asteroid->r = 1;
-    asteroid->g = 0;
-    asteroid->b = 0;
-
     // Initialise the sphere's vertices. (Adapted from tutorial 10 code.)
     const float r = 1.0;
     float theta, phi;
@@ -47,26 +41,26 @@ void initAsteroid(asteroid *asteroid, ship *ship) {
     for (int j = 0; j <= ASTEROID_DIVISIONS; j++, phi += step_phi) {
         theta = 0;
         for (int i = 0; i <= ASTEROID_DIVISIONS; i++, theta += step_theta) {
-        vertex.x = r * sinf(phi) * cosf(theta);
-        vertex.y = r * cosf(phi);
-        vertex.z = r * sinf(phi) * sinf(theta);
-        asteroidVertices[i][j] = vertex;
+            vertex.x = r * sinf(phi) * cosf(theta);
+            vertex.y = r * cosf(phi);
+            vertex.z = r * sinf(phi) * sinf(theta);
+            asteroidVertices[i][j] = vertex;
         }
     }
 }
 
 void drawAsteroid(asteroid *asteroid) {
-    //Brass
-    float mat_ambient[] ={ 0.329412f, 0.223529f, 0.027451f,1.0f };
-    float mat_diffuse[] ={ 0.780392f, 0.568627f, 0.113725f, 1.0f };
-    float mat_specular[] ={ 0.992157f, 0.941176f, 0.807843f, 1.0f };
-    float shine[] = {27.8974f};
+    // Brass
+    float matAmbient[] ={ 0.329412f, 0.223529f, 0.027451f,1.0f };
+    float matDiffuse[] ={ 0.780392f, 0.568627f, 0.113725f, 1.0f };
+    float matSpecular[] ={ 0.992157f, 0.941176f, 0.807843f, 1.0f };
+    float matShine[] = { 27.8974f };
 
     // setup materials
-    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-    glMaterialfv(GL_FRONT, GL_SHININESS, shine);
+    glMaterialfv(GL_FRONT, GL_AMBIENT, matAmbient);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, matDiffuse);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, matSpecular);
+    glMaterialfv(GL_FRONT, GL_SHININESS, matShine);
     
     // Drawing the asteroid.
     glPushMatrix();
@@ -88,13 +82,6 @@ void drawAsteroid(asteroid *asteroid) {
         glEnd();
     }
     glPopMatrix();
-
-    // glPushMatrix();
-    //     glColor3f(asteroid->r, asteroid->g, asteroid->b);
-    //     glTranslatef(asteroid->pos.x, asteroid->pos.y, asteroid->pos.z);
-    //     glScalef(asteroid->size, asteroid->size, asteroid->size);
-    //     glutSolidSphere(1.0, ASTEROID_DIVISIONS, ASTEROID_DIVISIONS);
-    // glPopMatrix();
 }
 
 void moveAsteroid(asteroid *asteroid, float deltaTime, int round) {
@@ -107,10 +94,6 @@ void moveAsteroid(asteroid *asteroid, float deltaTime, int round) {
 void asteroidWallCollision(asteroid *asteroid) {
     // The asteroid must be fully within the arena (activated) to be able to bounce off the wall.
     if(asteroid->activated) {
-        // TODO: Remove when textures are working?
-        asteroid->r = 1;
-        asteroid->g = 1;
-        asteroid->b = 1;
         // Check for collisions on the X-Axis walls.
         if(asteroid->pos.x + asteroid->size >= ARENA_RADIUS || asteroid->pos.x - asteroid->size <= -ARENA_RADIUS) {
             // Invert the asteroid's directional vector on the X-Axis.
@@ -125,11 +108,6 @@ void asteroidWallCollision(asteroid *asteroid) {
             // Invert the asteroid's directional vector on the Z-Axis.
             asteroid->dir.z = -asteroid->dir.z;
         } 
-    } else {
-        // TODO: Remove when textures are working?
-        asteroid->r = 1;
-        asteroid->g = 0;
-        asteroid->b = 0;
     }
 }
 

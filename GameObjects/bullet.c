@@ -15,28 +15,23 @@ void initBullet(bullet *bullet, ship *ship) {
 
     bullet->size = BULLET_RADIUS;
     bullet->activated = false;
-
-    bullet->r = 0;
-    bullet->g = 1;
-    bullet->b = 0;
 }
 
 void drawBullet(bullet *bullet) {
-    // Draw a glutSolidSphere at the bullet's current position, and scale.
     //Brass
-    float mat_ambient[] ={0.25f, 0.25f, 0.25f, 1.0f  };
-    float mat_diffuse[] ={0.4f, 0.4f, 0.4f, 1.0f };
-    float mat_specular[] ={0.774597f, 0.774597f, 0.774597f, 1.0f };
-    float shine[] = {76.8f};
+    float matAmbient[] ={ 0.25f, 0.25f, 0.25f, 1.0f };
+    float matDiffuse[] ={0.4f, 0.4f, 0.4f, 1.0f };
+    float matSpecular[] ={0.774597f, 0.774597f, 0.774597f, 1.0f };
+    float matShine[] = { 76.8f };
 
-    // setup materials
-    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-    glMaterialfv(GL_FRONT, GL_SHININESS, shine);
+    // Setup materials
+    glMaterialfv(GL_FRONT, GL_AMBIENT, matAmbient);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, matDiffuse);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, matSpecular);
+    glMaterialfv(GL_FRONT, GL_SHININESS, matShine);
 
+    // Draw a glutSolidSphere at the bullet's current position, and scale.
     glPushMatrix();
-        // glColor3f(bullet->r, bullet->g, bullet->b);
         glTranslatef(bullet->pos.x, bullet->pos.y, bullet->pos.z);
         glScalef(bullet->size, bullet->size, bullet->size);
         glutSolidSphere(1.0, 16, 16);
@@ -51,12 +46,7 @@ void moveBullet(bullet *bullet, float deltaTime) {
 }
 
 void bulletCollision(bullet *bullet) {
-    if(bullet->activated) {
-        // TODO: Remove this once textures are working?
-        bullet->r = 0;
-        bullet->g = 1;
-        bullet->b = 0;
-        
+    if(bullet->activated) {        
         if(bullet->pos.x + bullet->size >= ARENA_RADIUS || bullet->pos.x - bullet->size <= -ARENA_RADIUS) {
             bullet->activated = false;
         }
@@ -66,11 +56,6 @@ void bulletCollision(bullet *bullet) {
         if(bullet->pos.z + bullet->size >= ARENA_RADIUS || bullet->pos.z - bullet->size <= -ARENA_RADIUS) {
             bullet->activated = false;
         } 
-    } else {
-        // TODO: Remove this once textures are working?
-        bullet->r = 1;
-        bullet->g = 1;
-        bullet->b = 1;
     }
 }
 
@@ -80,7 +65,7 @@ void bulletAsteroidCollision(bullet *bullet, asteroid *asteroid) {
     float length = PYTHAGORAS(result.x, result.y, result.z);
 
     // Ensure the asteroid is activated, i.e. fully entered the arena in the case of larger asteroids.
-    if(asteroid->activated) {
+    if(asteroid->activated && bullet->activated) {
         if(length < asteroid->size + SHIP_LENGTH) {
             asteroid->alive = false;
             bullet->activated = false;
