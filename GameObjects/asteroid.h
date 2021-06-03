@@ -26,10 +26,9 @@ typedef struct {
     vec3d vertices[ASTEROID_DIVISIONS + 1][ASTEROID_DIVISIONS + 1];
     vec3d pos;
     vec3d dir;
+    vec3d rotate;
     int size;
     float velocity;
-    float r, g, b; // DEBUG colour of asteroid.
-    // float rotateVelocity;
     bool activated; // Is set to true when the asteroid enters the arena.
     bool alive;
 } asteroid;

@@ -1,6 +1,7 @@
 #include "asteroid.h"
 
 vec3d asteroidVertices[ASTEROID_DIVISIONS + 1][ASTEROID_DIVISIONS + 1];
+int angle = 0;
 
 void initAsteroidVertices(asteroid *asteroid) {
 
@@ -30,6 +31,11 @@ void initAsteroid(asteroid *asteroid, ship *ship) {
     // Set to false since asteroids start outside the arena.
     asteroid->activated = false;
     asteroid->alive = true;
+
+    // Set the random rotation direction.
+    asteroid->rotate.x = rand() % (1 + 1 - 0) + 0;
+    asteroid->rotate.y = rand() % (1 + 1 - 0) + 0;
+    asteroid->rotate.z = rand() % (1 + 1 - 0) + 0;
 
     // Initialise the sphere's vertices. (Adapted from tutorial 10 code.)
     const float r = 1.0;
@@ -65,11 +71,15 @@ void drawAsteroid(asteroid *asteroid) {
     // Drawing the asteroid.
     glPushMatrix();
     glTranslatef(asteroid->pos.x, asteroid->pos.y, asteroid->pos.z);
+    // Increase the angle at which the asteroid rotates.
+    angle++;
+    // Rotate the asteroid at a random angle.
+    glRotatef(angle, asteroid->rotate.x, asteroid->rotate.y, asteroid->rotate.z);
     glScalef(asteroid->size, asteroid->size, asteroid->size);
 
     int i, j;
     vec3d *v1, *v2;
-    for (j = 0; j < ASTEROID_DIVISIONS; j++) {    // divide by 2 for hemisphere
+    for (j = 0; j < ASTEROID_DIVISIONS; j++) { 
         glBegin(GL_TRIANGLE_STRIP);
         for (i = 0; i <= ASTEROID_DIVISIONS; i++) {
             v1 = &asteroidVertices[i][j];
