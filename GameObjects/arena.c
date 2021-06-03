@@ -50,6 +50,7 @@ wall initArena() {
 }
 
 void drawArena() {
+    glDisable(GL_LIGHTING);
     // Set up co-ordinates for the wall at X+ and draw.
     wall wallXPos;
     wallXPos.pos = (vec3d) {ARENA_RADIUS,0,0};
@@ -79,9 +80,11 @@ void drawArena() {
     wall wallZNeg;
     wallZNeg.pos = (vec3d) {0, 0, -ARENA_RADIUS};
     drawWall(&wallZNeg, wallNormal);
+    glEnable(GL_LIGHTING);
 }
 
 void shipWarning(ship *ship) {
+    glDisable(GL_LIGHTING);
     wall wallXPos;
     wallXPos.pos = (vec3d) {ARENA_RADIUS,0,0};
 
@@ -118,7 +121,7 @@ void shipWarning(ship *ship) {
     } else if (ship->pos.z - (SHIP_LENGTH * SHIP_WARNING) < -ARENA_RADIUS) {
         drawWall(&wallZNeg, wallWarning);
     }
-
+    glEnable(GL_LIGHTING);
 }
 
 bool shipCollision(ship *ship) {

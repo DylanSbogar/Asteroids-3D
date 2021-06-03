@@ -26,6 +26,7 @@ void initShip(ship *ship) {
 }
 
 void drawShip(ship *ship, float yaw, float roll, float pitch) {
+    glDisable(GL_LIGHTING);
     // Draw the body.
     glPushMatrix();
         glColor3f(1.0, 0.0, 1.0);
@@ -44,6 +45,7 @@ void drawShip(ship *ship, float yaw, float roll, float pitch) {
     //     glScalef(SHIP_LENGTH, SHIP_LENGTH, SHIP_LENGTH);
     //     glutWireSphere(1.0, 16, 16);
     // glPopMatrix();
+    glEnable(GL_LIGHTING);
 }
 
 void moveShip(ship *ship, float deltaTime, int turnValue) {

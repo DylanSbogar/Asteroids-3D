@@ -61,4 +61,6 @@ void onMousePress(int state, int button, int x, int y);
 
 void onMouseMove(int x, int y);
 
+void initLighting();
+
 #endif //MAIN_H

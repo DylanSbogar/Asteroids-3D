@@ -56,14 +56,17 @@ void initAsteroid(asteroid *asteroid, ship *ship) {
 }
 
 void drawAsteroid(asteroid *asteroid) {
-    float mat_diffuse[] = { 0.0, 0.8, 0.8, 1.0 };
-    float mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
-    float mat_shininess[] = { 100.0 };
+    //Brass
+    float mat_ambient[] ={ 0.329412f, 0.223529f, 0.027451f,1.0f };
+    float mat_diffuse[] ={ 0.780392f, 0.568627f, 0.113725f, 1.0f };
+    float mat_specular[] ={ 0.992157f, 0.941176f, 0.807843f, 1.0f };
+    float shine[] = {27.8974f};
 
     // setup materials
+    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
     glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
     glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-    glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+    glMaterialfv(GL_FRONT, GL_SHININESS, shine);
     
     // Drawing the asteroid.
     glPushMatrix();

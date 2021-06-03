@@ -23,8 +23,20 @@ void initBullet(bullet *bullet, ship *ship) {
 
 void drawBullet(bullet *bullet) {
     // Draw a glutSolidSphere at the bullet's current position, and scale.
+    //Brass
+    float mat_ambient[] ={0.25f, 0.25f, 0.25f, 1.0f  };
+    float mat_diffuse[] ={0.4f, 0.4f, 0.4f, 1.0f };
+    float mat_specular[] ={0.774597f, 0.774597f, 0.774597f, 1.0f };
+    float shine[] = {76.8f};
+
+    // setup materials
+    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+    glMaterialfv(GL_FRONT, GL_SHININESS, shine);
+
     glPushMatrix();
-        glColor3f(bullet->r, bullet->g, bullet->b);
+        // glColor3f(bullet->r, bullet->g, bullet->b);
         glTranslatef(bullet->pos.x, bullet->pos.y, bullet->pos.z);
         glScalef(bullet->size, bullet->size, bullet->size);
         glutSolidSphere(1.0, 16, 16);

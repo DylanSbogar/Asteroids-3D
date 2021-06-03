@@ -49,6 +49,18 @@ void onReshape(int w, int h) {
     }
 }
 
+void initLighting() {
+    float ambient[] = { 1.0, 1.0, 1.0, 1.0 };
+    float diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
+    float specular[] = { 1.0, 1.0, 1.0, 1.0 };
+
+    glEnable(GL_LIGHTING);
+    glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
+    glEnable(GL_LIGHT0);
+}
+
 void renderFrame() {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -108,7 +120,6 @@ void onIdle() {
             moveAsteroid(&asteroids[i], deltaTime, roundNum);
         }
     }
-
     glutPostRedisplay();
 }
 
@@ -313,6 +324,9 @@ void initGame() {
     glutPassiveMotionFunc(onMouseMove);
     glutDisplayFunc(onDisplay);
     glutIdleFunc(onIdle);
+
+    initLighting();
+    glEnable(GL_NORMALIZE);
 
     // Hide the cursor on screen.
     glutSetCursor(GLUT_CURSOR_NONE);
