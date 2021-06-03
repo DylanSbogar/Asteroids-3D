@@ -26,6 +26,12 @@ typedef struct {
     float velocity;
 } ship;
 
+void initShipBody(); // Cylinder
+
+void initShipTip(); // Hemisphere
+
+void initShipWings(); // Triangle
+
 void initShip(ship *ship);
 
 void drawShip(ship *ship, float yaw, float roll, float pitch);

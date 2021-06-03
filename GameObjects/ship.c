@@ -1,5 +1,17 @@
 #include "ship.h"
 
+void initShipBody() {
+
+}
+
+void initShipTip() {
+    
+}
+
+void initShipWings() {
+
+}
+
 void initShip(ship *ship) {
     ship->pos.x = 0;
     ship->pos.y = 0;
