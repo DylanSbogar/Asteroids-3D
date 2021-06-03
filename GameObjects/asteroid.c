@@ -102,6 +102,7 @@ void asteroidWallCollision(asteroid *asteroid) {
         // Check for collisions on the Y-Axis walls.
         if(asteroid->pos.y + asteroid->size >= ARENA_RADIUS || asteroid->pos.y - asteroid->size <= -ARENA_RADIUS) {
             // Invert the asteroid's directional vector on the Y-Axis.
+            asteroid->dir.y = -asteroid->dir.y;
         }
         // Check for collisions on the Z-Axis walls.
         if(asteroid->pos.z + asteroid->size >= ARENA_RADIUS || asteroid->pos.z - asteroid->size <= -ARENA_RADIUS) {
