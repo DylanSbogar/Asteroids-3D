@@ -9,6 +9,7 @@ int roundNum = 0;
 
 int currentTime = 0;
 float previousTime = 0.0;
+
 bool firstMouse = true;
 bool gameOver = false;
 bool roundOver;
@@ -16,7 +17,8 @@ bool roundOver;
 keyHandler kh;
 camera cam;
 ship player;
-bullet testBullet;
+// bullet testBullet;
+bullet bullets[MAX_BULLETS];
 asteroid asteroids[MAX_ROUNDS];
 
 void placeCamera(camera *camera) {
@@ -78,8 +80,10 @@ void renderFrame() {
         }
     }
 
-    if(testBullet.activated) {
-        drawBullet(&testBullet);
+    for(int i = 0; i < MAX_BULLETS; i++) {
+        if(bullets[i].activated) {
+            drawBullet(&bullets[i]);
+        }
     }
 }
 
@@ -138,34 +142,38 @@ void updateGameState(camera *camera, ship *ship, float deltaTime) {
     if(shipCollision(&player)) {
         initGame();
     }
-    if(testBullet.activated) {
-        moveBullet(&testBullet, deltaTime);
+    for(int i = 0; i < MAX_BULLETS; i++) {
+        if(bullets[i].activated) {
+            moveBullet(&bullets[i], deltaTime);
+        }
+        
+        // Check if the bullet collides with the wall.
+        bulletCollision(&bullets[i]);
     }
-
-    // Check if the bullet collides with the wall.
-    bulletCollision(&testBullet);
 
     // Used to calculate when the round ends.
     roundOver = true;
 
-    for(int i = 0; i < roundNum; i++) {
+    for(int j = 0; j < roundNum; j++) {
         // 'Activate' asteroids as they enter the arena, and perform wall collision checks.
-        checkActivated(&asteroids[i]);
+        checkActivated(&asteroids[j]);
 
         // Check whether any of the asteroids are ready to bounce off the walls.
-        asteroidWallCollision(&asteroids[i]);
+        asteroidWallCollision(&asteroids[j]);
         
-        // Check whether a bullet has destroyed any of the asteroids.
-        bulletAsteroidCollision(&testBullet, &asteroids[i]);
-        
+        for(int k = 0; k < MAX_BULLETS; k++) {
+            // Check whether a bullet has destroyed any of the asteroids.
+            bulletAsteroidCollision(&bullets[k], &asteroids[j]);
+        }
+   
         // If the ship has collided with an asteroid, end the game.
-        if(asteroidShipCollision(&player, &asteroids[i])) {
+        if(asteroidShipCollision(&player, &asteroids[j])) {
             // TODO: Replace with restartGame().
             initGame();
         }
 
         // If any asteroids are still alive, the round is not over.
-        if(asteroids[i].alive) {
+        if(asteroids[j].alive) {
             roundOver = false;
         }
     }
@@ -235,10 +243,14 @@ void onKeyUp(unsigned char key, int x, int y) {
 void onMousePress(int state, int button, int x, int y) {
     // If the left mouse button is pressed down.
     if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
-        // Only fire if the bullet is not currently fired.
-        if(!testBullet.activated) {
-            initBullet(&testBullet, &player);
-            testBullet.activated = true;
+        bool fired = false;
+
+        for(int i = 0; i < MAX_BULLETS; i++) {
+            if(!bullets[i].activated && !fired) {
+                initBullet(&bullets[i], &player);
+                bullets[i].activated = true;
+                fired = true;
+            }
         }
     }
 }

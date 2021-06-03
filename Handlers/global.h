@@ -6,6 +6,7 @@
 
 #define MAX_BULLETS 20
 #define BULLET_RADIUS 1
+#define FIRE_RATE 1
 
 #define SHIP_VELOCITY 0.05
 #define SHIP_WARNING 20
