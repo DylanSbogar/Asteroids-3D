@@ -33,7 +33,7 @@ typedef struct {
     bool alive;
 } asteroid;
 
-void initAsteroidVertices(asteroid *asteroid);
+void initAsteroidVertices();
 
 void initAsteroid(asteroid *asteroid, ship *ship);
 

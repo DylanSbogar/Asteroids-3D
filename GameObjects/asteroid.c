@@ -3,8 +3,23 @@
 vec3d asteroidVertices[ASTEROID_DIVISIONS + 1][ASTEROID_DIVISIONS + 1];
 int angle = 0;
 
-void initAsteroidVertices(asteroid *asteroid) {
-
+void initAsteroidVertices() {
+    // Initialise the sphere's vertices. (Adapted from tutorial 10 code.)
+    const float r = 1.0;
+    float theta, phi;
+    vec3d vertex;
+    float step_theta = 2.0 * M_PI / ASTEROID_DIVISIONS;
+    float step_phi = M_PI / ASTEROID_DIVISIONS;
+    phi = 0;
+    for (int j = 0; j <= ASTEROID_DIVISIONS; j++, phi += step_phi) {
+        theta = 0;
+        for (int i = 0; i <= ASTEROID_DIVISIONS; i++, theta += step_theta) {
+            vertex.x = r * sinf(phi) * cosf(theta);
+            vertex.y = r * cosf(phi);
+            vertex.z = r * sinf(phi) * sinf(theta);
+            asteroidVertices[i][j] = vertex;
+        }
+    }
 }
 
 void initAsteroid(asteroid *asteroid, ship *ship) {
@@ -36,23 +51,6 @@ void initAsteroid(asteroid *asteroid, ship *ship) {
     asteroid->rotate.x = rand() % (1 + 1 - 0) + 0;
     asteroid->rotate.y = rand() % (1 + 1 - 0) + 0;
     asteroid->rotate.z = rand() % (1 + 1 - 0) + 0;
-
-    // Initialise the sphere's vertices. (Adapted from tutorial 10 code.)
-    const float r = 1.0;
-    float theta, phi;
-    vec3d vertex;
-    float step_theta = 2.0 * M_PI / ASTEROID_DIVISIONS;
-    float step_phi = M_PI / ASTEROID_DIVISIONS;
-    phi = 0;
-    for (int j = 0; j <= ASTEROID_DIVISIONS; j++, phi += step_phi) {
-        theta = 0;
-        for (int i = 0; i <= ASTEROID_DIVISIONS; i++, theta += step_theta) {
-            vertex.x = r * sinf(phi) * cosf(theta);
-            vertex.y = r * cosf(phi);
-            vertex.z = r * sinf(phi) * sinf(theta);
-            asteroidVertices[i][j] = vertex;
-        }
-    }
 }
 
 void drawAsteroid(asteroid *asteroid) {

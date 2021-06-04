@@ -345,6 +345,7 @@ void initGame() {
     glutDisplayFunc(onDisplay);
     glutIdleFunc(onIdle);
 
+    initAsteroidVertices();
     initLighting();
     glEnable(GL_NORMALIZE);
 
