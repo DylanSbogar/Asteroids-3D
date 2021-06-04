@@ -19,7 +19,6 @@ static DrawObject drawObject;
 keyHandler kh;
 camera cam;
 ship player;
-// bullet testBullet;
 bullet bullets[MAX_BULLETS];
 asteroid asteroids[MAX_ROUNDS];
 
@@ -71,13 +70,11 @@ void renderFrame() {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-     //TODO: Put draw methods here.
     placeCamera(&cam);
     shipWarning(&player);
     drawArena();
-    
     // drawAxes();
-    // drawShip(&player, cam.yaw, cam.roll, cam.pitch);
+    drawShip(&drawObject, &player, cam.yaw, cam.roll, cam.pitch);
 
     for(int i = 0; i < roundNum; i++) {
         if(asteroids[i].alive) {
@@ -90,8 +87,6 @@ void renderFrame() {
             drawBullet(&bullets[i]);
         }
     }
-
-    Draw(&drawObject, &player, cam.yaw, cam.roll, cam.pitch);
 }
 
 void updateCameraPosition(camera *camera, float deltaTime) {

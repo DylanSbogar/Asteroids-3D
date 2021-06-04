@@ -73,8 +73,6 @@ void onMouseMove(int x, int y);
 
 void initLighting();
 
-// ------------------------
-
 static void CalcNormal(float N[3], float v0[3], float v1[3], float v2[3]);
 
 static char* mmap_file(size_t* len, const char* filename);
