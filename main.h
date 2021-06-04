@@ -1,6 +1,16 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+#define TINYOBJ_LOADER_C_IMPLEMENTATION
+#include "Handlers/tinyobj_loader_c.h"
+#include <float.h>
+#include <limits.h>
+#include <fcntl.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
@@ -62,5 +72,19 @@ void onMousePress(int state, int button, int x, int y);
 void onMouseMove(int x, int y);
 
 void initLighting();
+
+// ------------------------
+
+static void CalcNormal(float N[3], float v0[3], float v1[3], float v2[3]);
+
+static char* mmap_file(size_t* len, const char* filename);
+
+static char* get_dirname(char* path);
+
+static void get_file_data(void* ctx, const char* filename, const int is_mtl, const char* obj_filename, char** data, size_t* len);
+
+static int LoadObjAndConvert(float bmin[3], float bmax[3], const char* filename);
+
+void Draw(const DrawObject* drawObject);
 
 #endif //MAIN_H

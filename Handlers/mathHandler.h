@@ -27,6 +27,11 @@ typedef struct {
     float z;
 } vec3d;
 
+typedef struct {
+  GLuint vb;
+  int numTriangles;
+} DrawObject;
+
 #define RAD_TO_DEG(rad) (rad * (180 / M_PI))
 
 #define DEG_TO_RAD(deg) (deg * (M_PI / 180))
