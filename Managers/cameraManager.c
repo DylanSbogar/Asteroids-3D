@@ -19,6 +19,6 @@ void initCamera(camera *camera) {
 }
 void moveCamera(camera *camera, float deltaTime, int turnValue, vec3d *ship) {
     camera->pos.x = ship->x - 15 * cos(DEG_TO_RAD(camera->yaw));
-    camera->pos.y = ship->y + (20 * -sin(DEG_TO_RAD(camera->pitch)));
+    camera->pos.y = ship->y + (20 * -sin(DEG_TO_RAD(camera->pitch))) + 6;
     camera->pos.z = ship->z - 15 * sin(DEG_TO_RAD(camera->yaw));
 }
