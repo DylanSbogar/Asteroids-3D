@@ -77,9 +77,7 @@ void renderFrame() {
     drawArena();
     
     // drawAxes();
-    drawShip(&player, cam.yaw, cam.roll, cam.pitch);
-
-    Draw(&drawObject);
+    // drawShip(&player, cam.yaw, cam.roll, cam.pitch);
 
     for(int i = 0; i < roundNum; i++) {
         if(asteroids[i].alive) {
@@ -92,6 +90,8 @@ void renderFrame() {
             drawBullet(&bullets[i]);
         }
     }
+
+    Draw(&drawObject, &player, cam.yaw, cam.roll, cam.pitch);
 }
 
 void updateCameraPosition(camera *camera, float deltaTime) {
@@ -748,44 +748,4 @@ static int LoadObjAndConvert(float bmin[3], float bmax[3], const char* filename)
     tinyobj_materials_free(materials, num_materials);
 
     return 1;
-}
-
-void Draw(const DrawObject* drawObject) {
-    glPolygonMode(GL_FRONT, GL_FILL);
-    glPolygonMode(GL_BACK, GL_FILL);
-
-    glEnable(GL_POLYGON_OFFSET_FILL);
-    glPolygonOffset(1.0, 1.0);
-    glColor3f(1.0f, 1.0f, 1.0f);
-    if (drawObject->vb >= 1) {
-        glBindBuffer(GL_ARRAY_BUFFER, drawObject->vb);
-        glEnableClientState(GL_VERTEX_ARRAY);
-        glEnableClientState(GL_NORMAL_ARRAY);
-        glEnableClientState(GL_COLOR_ARRAY);
-        glVertexPointer(3, GL_FLOAT, 36, (const void*)0);
-        glNormalPointer(GL_FLOAT, 36, (const void*)(sizeof(float) * 3));
-        glColorPointer(3, GL_FLOAT, 36, (const void*)(sizeof(float) * 6));
-
-        glDrawArrays(GL_TRIANGLES, 0, 3 * drawObject->numTriangles);
-        // CheckErrors("drawarrays");
-    }
-
-    // /* draw wireframe */
-    // glDisable(GL_POLYGON_OFFSET_FILL);
-    // glPolygonMode(GL_FRONT, GL_LINE);
-    // glPolygonMode(GL_BACK, GL_LINE);
-
-    // glColor3f(0.0f, 0.0f, 0.4f);
-
-    // if (drawObject->vb >= 1) {
-    //     glBindBuffer(GL_ARRAY_BUFFER, drawObject->vb);
-    //     glEnableClientState(GL_VERTEX_ARRAY);
-    //     glEnableClientState(GL_NORMAL_ARRAY);
-    //     glDisableClientState(GL_COLOR_ARRAY);
-    //     glVertexPointer(3, GL_FLOAT, 36, (const void*)0);
-    //     glNormalPointer(GL_FLOAT, 36, (const void*)(sizeof(float) * 3));
-
-    //     glDrawArrays(GL_TRIANGLES, 0, 3 * drawObject->numTriangles);
-    //     // CheckErrors("drawarrays");
-    // }
 }

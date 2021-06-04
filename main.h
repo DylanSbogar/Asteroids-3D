@@ -85,6 +85,4 @@ static void get_file_data(void* ctx, const char* filename, const int is_mtl, con
 
 static int LoadObjAndConvert(float bmin[3], float bmax[3], const char* filename);
 
-void Draw(const DrawObject* drawObject);
-
 #endif //MAIN_H

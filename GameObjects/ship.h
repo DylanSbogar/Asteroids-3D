@@ -28,6 +28,8 @@ typedef struct {
 
 void initShip(ship *ship);
 
+void Draw(const DrawObject* drawObject, ship *ship, float yaw, float roll, float pitch);
+
 void drawShip(ship *ship, float yaw, float roll, float pitch);
 
 void moveShip(ship *ship, float deltaTime, int turnValue);
