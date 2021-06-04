@@ -289,7 +289,7 @@ void onMouseMove(int x, int y) {
     cam.pitch += yOffset;
 
     // Set a limiter for the pitch of the camera.
-    float limit = 62.5;
+    float limit = 45;
     if (cam.pitch > limit) {
         cam.pitch = limit;
     } else if (cam.pitch < -limit) {
