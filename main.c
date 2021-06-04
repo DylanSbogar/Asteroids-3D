@@ -158,6 +158,14 @@ void updateGameState(camera *camera, ship *ship, float deltaTime) {
         // 'Activate' asteroids as they enter the arena, and perform wall collision checks.
         checkActivated(&asteroids[j]);
 
+        for(int d = 0; d < roundNum; d++) {
+            if (d != j) {
+                if(asteroids[d].alive) {
+                    asteroidBouncing(&asteroids[j], &asteroids[d]);
+                }
+            }
+        }
+
         // Check whether any of the asteroids are ready to bounce off the walls.
         asteroidWallCollision(&asteroids[j]);
         

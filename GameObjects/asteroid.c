@@ -149,3 +149,22 @@ bool asteroidShipCollision(ship *ship, asteroid *asteroid) {
         return false;
     }
 }
+
+void asteroidBouncing(asteroid *a, asteroid *a2) {
+    if((a->alive && a2->alive) && (a->activated && a2->activated)) {
+        vec3d result = distanceBetweenPoints(a->pos, a2->pos);
+        float length = PYTHAGORAS(result.x, result.y, result.z);
+
+        // If the ship and asteroid are touching, or inside one another.
+        if(length < a->size + a2->size) {
+            a->dir.x = -a->dir.x;
+            a->dir.y = -a->dir.y;
+            a->dir.z = -a->dir.z;
+
+            a2->dir.x = -a->dir.x;
+            a2->dir.y = -a->dir.y;
+            a2->dir.z = -a->dir.z;
+            printf("aaa\n");
+        }
+    }
+}

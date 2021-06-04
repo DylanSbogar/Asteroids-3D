@@ -47,4 +47,6 @@ void checkActivated(asteroid *asteroid);
 
 bool asteroidShipCollision(ship *ship, asteroid *asteroid);
 
+void asteroidBouncing(asteroid *a, asteroid *a2);
+
 #endif //ASTEROID_H
