@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include "../Managers/cameraManager.h"
 #include "../Handlers/mathHandler.h"
 #include "../Handlers/global.h"
 #include "ship.h"
@@ -25,6 +26,14 @@ typedef struct {
     vec3d pos;
     float r, g, b;
 } wall;
+
+void initSkyboxTexcoords();
+
+void initSkyboxVertices();
+
+void initSkyboxTextures();
+
+void drawSkybox(camera *camera);
 
 void drawAxes();
 

@@ -3,6 +3,7 @@
 
 #define WALL_SEGMENTS 20
 #define ARENA_RADIUS 350
+#define SKYBOX_SEGMENTS 50
 
 #define MAX_BULLETS 20
 #define BULLET_RADIUS 1

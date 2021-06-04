@@ -7,7 +7,7 @@ void initCamera(camera *camera) {
 
     camera->front.x = 0;
     camera->front.y = 0;
-    camera->front.z = -1;
+    camera->front.z = 1;
 
     camera->up.x = 0;
     camera->up.y = 1;

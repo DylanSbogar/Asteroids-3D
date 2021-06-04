@@ -38,7 +38,7 @@ void onReshape(int w, int h) {
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(90.0, aspectRatio, 1.0, 2000.0);
+    gluPerspective(90.0, aspectRatio, 0.1, 2000.0);
 
     
 
@@ -69,8 +69,10 @@ void initLighting() {
 void renderFrame() {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-
     placeCamera(&cam);
+    glDisable(GL_DEPTH_TEST);
+    drawSkybox(&cam);
+    glEnable(GL_DEPTH_TEST);
     shipWarning(&player);
     drawArena();
     // drawAxes();
@@ -177,10 +179,10 @@ void updateGameState(camera *camera, ship *ship, float deltaTime) {
         }
    
         // If the ship has collided with an asteroid, end the game.
-        if(asteroidShipCollision(&player, &asteroids[j])) {
-            // TODO: Replace with restartGame().
-            initGame();
-        }
+        // if(asteroidShipCollision(&player, &asteroids[j])) {
+        //     // TODO: Replace with restartGame().
+        //     initGame();
+        // }
 
         // If any asteroids are still alive, the round is not over.
         if(asteroids[j].alive) {
@@ -347,9 +349,17 @@ void initGame() {
     glutDisplayFunc(onDisplay);
     glutIdleFunc(onIdle);
 
-    initAsteroidVertices();
     initLighting();
+    initAsteroidVertices();
+    initSkyboxVertices();
+    initSkyboxTextures();
+    initSkyboxTexcoords();
+
+    glEnable(GL_TEXTURE_2D);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_NORMALIZE);
+
 
     // Hide the cursor on screen.
     glutSetCursor(GLUT_CURSOR_NONE);

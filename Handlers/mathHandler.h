@@ -28,6 +28,11 @@ typedef struct {
 } vec3d;
 
 typedef struct {
+    float u;
+    float v;
+} texCoord;
+
+typedef struct {
   GLuint vb;
   int numTriangles;
 } DrawObject;
