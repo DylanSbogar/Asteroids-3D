@@ -28,6 +28,7 @@ typedef struct {
     vec3d pos;
     vec3d front;
     vec3d up;
+    float zoom;
     float pitch, yaw, roll;
     int lastX, lastY;
     bool warpedCursor;

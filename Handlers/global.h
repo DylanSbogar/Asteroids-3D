@@ -1,6 +1,10 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
+#define CAM_DEFAULT_ZOOM 15
+#define CAM_MIN_ZOOM 10
+#define CAM_MAX_ZOOM 30
+
 #define WALL_SEGMENTS 20
 #define ARENA_RADIUS 350
 #define SKYBOX_SEGMENTS 50

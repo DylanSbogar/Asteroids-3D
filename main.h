@@ -42,6 +42,8 @@
 typedef struct {
     bool movingForward;
     bool movingBackward;
+    bool zoomingIn;
+    bool zoomingOut;
 } keyHandler;
 
 int main(int argc, char **argv);
@@ -71,6 +73,8 @@ void onMousePress(int state, int button, int x, int y);
 void onMouseMove(int x, int y);
 
 void initLighting();
+
+// MODEL LOADING BELOW HERE
 
 static void CalcNormal(float N[3], float v0[3], float v1[3], float v2[3]);
 

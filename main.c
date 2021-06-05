@@ -132,6 +132,7 @@ void onIdle() {
 }
 
 void updateGameState(camera *camera, ship *ship, float deltaTime) {
+    // Regarding key press states.
     if(kh.movingForward) {
         moveShip(&player, deltaTime, 1);
         moveCamera(&cam, deltaTime, 1, &ship->pos);
@@ -140,9 +141,24 @@ void updateGameState(camera *camera, ship *ship, float deltaTime) {
         moveShip(&player, deltaTime, -1);
         moveCamera(&cam, deltaTime, -1, &ship->pos);
     }
+    if(kh.zoomingIn) {
+        camera->zoom -= 1;
+
+        if(camera->zoom < CAM_MIN_ZOOM)
+            camera->zoom = CAM_MIN_ZOOM;
+    }
+    if(kh.zoomingOut) {
+        camera->zoom += 1;
+        if(camera->zoom > CAM_MAX_ZOOM)
+            camera->zoom = CAM_MAX_ZOOM;
+    }
+
+    // If the ship collides with an arena wall.
     if(shipCollision(&player)) {
         restartGame();
     }
+    
+    // Move each bullet that is currently activated.
     for(int i = 0; i < MAX_BULLETS; i++) {
         if(bullets[i].activated) {
             moveBullet(&bullets[i], deltaTime);
@@ -210,6 +226,15 @@ void onKeyPress(unsigned char key, int x, int y) {
             kh.movingBackward = true;
             kh.movingForward = false;
             break;
+        case 'R':
+            kh.zoomingIn = true;
+            kh.zoomingOut = false;
+
+            break;
+        case 'F':
+            kh.zoomingOut = true;
+            kh.zoomingIn = false;
+            break;
         case KEY_ESC:
             exit(EXIT_SUCCESS);
             break;
@@ -222,6 +247,12 @@ void onKeyUp(unsigned char key, int x, int y) {
             break;
         case 'S':
             kh.movingBackward = false;
+            break;
+        case 'R':
+            kh.zoomingIn = false;
+            break;
+        case 'F':
+            kh.zoomingOut = false;
             break;
     }
 }
@@ -307,6 +338,8 @@ void restartGame() {
 void initKeyHandler() {
     kh.movingForward = false;
     kh.movingBackward = false;
+    kh.zoomingIn = false;
+    kh.zoomingOut = false;
 }
 
 void initGame() {
