@@ -42,9 +42,6 @@
 typedef struct {
     bool movingForward;
     bool movingBackward;
-    bool rollingLeft;
-    bool rollingRight;
-    bool restartGame;
 } keyHandler;
 
 int main(int argc, char **argv);
@@ -62,6 +59,8 @@ void onIdle();
 void updateGameState(camera *camera, ship *ship, float deltaTime);
 
 void renderFrame();
+
+void restartGame();
 
 void onKeyPress(unsigned char key, int x, int y);
 

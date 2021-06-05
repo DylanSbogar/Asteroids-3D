@@ -140,11 +140,8 @@ void updateGameState(camera *camera, ship *ship, float deltaTime) {
         moveShip(&player, deltaTime, -1);
         moveCamera(&cam, deltaTime, -1, &ship->pos);
     }
-    if(kh.restartGame) {
-        initGame();
-    }
     if(shipCollision(&player)) {
-        initGame();
+        restartGame();
     }
     for(int i = 0; i < MAX_BULLETS; i++) {
         if(bullets[i].activated) {
@@ -180,8 +177,7 @@ void updateGameState(camera *camera, ship *ship, float deltaTime) {
    
         // If the ship has collided with an asteroid, end the game.
         if(asteroidShipCollision(&player, &asteroids[j])) {
-            // TODO: Replace with restartGame().
-            initGame();
+            restartGame();
         }
 
         // If any asteroids are still alive, the round is not over.
@@ -210,21 +206,9 @@ void onKeyPress(unsigned char key, int x, int y) {
             kh.movingForward = true;
             kh.movingBackward = false;
             break;
-        case 'A':
-            kh.rollingLeft = true;
-            kh.rollingRight = false;
-            break;
         case 'S':
             kh.movingBackward = true;
             kh.movingForward = false;
-            break;
-        case 'D':
-            kh.rollingRight = true;
-            kh.rollingLeft = false;
-            break;
-        case 'R':
-            gameOver = false;
-            kh.restartGame = true;
             break;
         case KEY_ESC:
             exit(EXIT_SUCCESS);
@@ -236,18 +220,8 @@ void onKeyUp(unsigned char key, int x, int y) {
         case 'W':
             kh.movingForward = false;
             break;
-        case 'A':
-            kh.rollingLeft = false;
-            break;
         case 'S':
             kh.movingBackward = false;
-            break;
-        case 'D':
-            kh.rollingRight = false;
-            break;
-        case 'R':
-            gameOver = false;
-            kh.restartGame = false;
             break;
     }
 }
@@ -320,12 +294,19 @@ void onMouseMove(int x, int y) {
 }
 // END INPUT METHODS
 
+void restartGame() {
+    roundNum = 1;
+    initKeyHandler();
+    initCamera(&cam);
+    initShip(&player);
+    for(int ast = 0; ast < roundNum; ast++) {
+        initAsteroid(&asteroids[ast], &player);
+    }
+}
+
 void initKeyHandler() {
     kh.movingForward = false;
     kh.movingBackward = false;
-    kh.rollingLeft = false;
-    kh.rollingRight = false;
-    kh.restartGame = false;
 }
 
 void initGame() {
