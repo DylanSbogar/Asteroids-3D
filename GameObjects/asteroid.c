@@ -162,7 +162,6 @@ void asteroidBouncing(asteroid *a, asteroid *a2) {
             a2->dir.x = -a->dir.x;
             a2->dir.y = -a->dir.y;
             a2->dir.z = -a->dir.z;
-            printf("aaa\n");
         }
     }
 }

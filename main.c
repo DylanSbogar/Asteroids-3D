@@ -84,9 +84,9 @@ void renderFrame() {
         }
     }
 
-    for(int i = 0; i < MAX_BULLETS; i++) {
-        if(bullets[i].activated) {
-            drawBullet(&bullets[i]);
+    for(int j = 0; j < MAX_BULLETS; j++) {
+        if(bullets[j].activated) {
+            drawBullet(&bullets[j]);
         }
     }
 }
@@ -197,9 +197,9 @@ void updateGameState(camera *camera, ship *ship, float deltaTime) {
         // TODO: Wait 5 seconds before starting the next wave.
 
         // Create x amount of new asteroids corresponding with the round number.
-        for(int i = 0; i < roundNum; i++)
+        for(int ast = 0; ast < roundNum; ast++)
         {
-            initAsteroid(&asteroids[i], &player);
+            initAsteroid(&asteroids[ast], &player);
         }
     }
 }
@@ -521,11 +521,6 @@ static char* get_dirname(char* path) {
 }
 
 static void get_file_data(void* ctx, const char* filename, const int is_mtl, const char* obj_filename, char** data, size_t* len) {
-    // NOTE: If you allocate the buffer with malloc(),
-    // You can define your own memory management struct and pass it through `ctx`
-    // to store the pointer and free memories at clean up stage(when you quit an
-    // app)
-    // This example uses mmap(), so no free() required.
     (void)ctx;
 
     if (!filename) {
@@ -555,7 +550,6 @@ static void get_file_data(void* ctx, const char* filename, const int is_mtl, con
         * a C standard library function */
         basedirname = my_strdup(obj_filename, strlen(obj_filename));
         basedirname = get_dirname(basedirname);
-        printf("basedirname = %s\n", basedirname);
         }
 
         if (basedirname) {
@@ -570,8 +564,6 @@ static void get_file_data(void* ctx, const char* filename, const int is_mtl, con
         } else {
         strncpy(tmp, filename, strlen(filename) + 1);
         }
-
-        printf("tmp = %s\n", tmp);
 
         if (basedirname) {
         free(basedirname);
@@ -598,18 +590,6 @@ static int LoadObjAndConvert(float bmin[3], float bmax[3], const char* filename)
         if (ret != TINYOBJ_SUCCESS) {
         return 0;
         }
-
-        printf("# of shapes    = %d\n", (int)num_shapes);
-        printf("# of materials = %d\n", (int)num_materials);
-
-        /*
-        {
-        int i;
-        for (i = 0; i < num_shapes; i++) {
-            printf("shape[%d] name = %s\n", i, shapes[i].name);
-        }
-        }
-        */
     }
 
     bmin[0] = bmin[1] = bmin[2] = FLT_MAX;
@@ -742,11 +722,6 @@ static int LoadObjAndConvert(float bmin[3], float bmax[3], const char* filename)
 
         drawObject = o;
     }
-
-    printf("bmin = %f, %f, %f\n", (double)bmin[0], (double)bmin[1],
-            (double)bmin[2]);
-    printf("bmax = %f, %f, %f\n", (double)bmax[0], (double)bmax[1],
-            (double)bmax[2]);
 
     tinyobj_attrib_free(&attrib);
     tinyobj_shapes_free(shapes, num_shapes);
