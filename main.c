@@ -179,10 +179,10 @@ void updateGameState(camera *camera, ship *ship, float deltaTime) {
         }
    
         // If the ship has collided with an asteroid, end the game.
-        // if(asteroidShipCollision(&player, &asteroids[j])) {
-        //     // TODO: Replace with restartGame().
-        //     initGame();
-        // }
+        if(asteroidShipCollision(&player, &asteroids[j])) {
+            // TODO: Replace with restartGame().
+            initGame();
+        }
 
         // If any asteroids are still alive, the round is not over.
         if(asteroids[j].alive) {
