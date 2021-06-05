@@ -11,6 +11,8 @@ void initShip(ship *ship) {
 
     // Set the ship velocity to be the same as the camera.
     ship->velocity = SHIP_VELOCITY;
+
+    ship->size = SHIP_LENGTH;
 }
 
 void drawShip(const DrawObject* drawObject, ship *ship, float yaw, float roll, float pitch) {
@@ -30,7 +32,7 @@ void drawShip(const DrawObject* drawObject, ship *ship, float yaw, float roll, f
     glRotatef(-yaw, 0, 1, 0);
     glRotatef(roll, 1, 0, 0);
     glRotatef(pitch, 0, 0, 1);
-    glScalef(SHIP_LENGTH/3, SHIP_LENGTH/3, SHIP_LENGTH/3);
+    glScalef(ship->size/2.5, ship->size/2.5, ship->size/2.5);
 
     glPolygonMode(GL_FRONT, GL_FILL);
     glPolygonMode(GL_BACK, GL_FILL);

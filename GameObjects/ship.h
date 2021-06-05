@@ -24,6 +24,7 @@ typedef struct {
     vec3d pos;
     vec3d dir;
     float velocity;
+    float size;
 } ship;
 
 void initShip(ship *ship);
