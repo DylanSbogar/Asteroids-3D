@@ -76,6 +76,10 @@ void initLighting();
 
 void initDirLighting();
 
+void initSpot();
+
+void updateSpot();
+
 int getTime();
 
 void setRestartTime();

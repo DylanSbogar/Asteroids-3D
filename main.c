@@ -71,14 +71,36 @@ void initLighting() {
 void initDirLighting() {
     float noAmbient[] = {0.0f, 0.0f, 0.0f, 1.0f};
     float whiteDiffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
-    float position[] = {ARENA_RADIUS, ARENA_RADIUS, ARENA_RADIUS, 0.0f};
-    float direction[] = {-1, -1, -1};
+    float position[] = {ARENA_RADIUS, ARENA_RADIUS/2, ARENA_RADIUS/2, 0.0f};
 
     glLightfv(GL_LIGHT1, GL_AMBIENT, noAmbient);
     glLightfv(GL_LIGHT1, GL_DIFFUSE, whiteDiffuse);
     glLightfv(GL_LIGHT1, GL_POSITION, position);
-    glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, direction);
-    glEnable(GL_LIGHT1);
+}
+
+void initSpot() {
+    float noAmbient[] = {0.0f, 0.0f, 0.2f, 1.0f};
+    float diffuse[]   = {0.0f, 0.0f, 1.0f, 1.0f};
+    float position[]  = {0.0f, 0.0f, 0.0f, 1.0f};
+
+    glLightfv(GL_LIGHT2, GL_AMBIENT, noAmbient);
+    glLightfv(GL_LIGHT2, GL_DIFFUSE, diffuse);
+    glLightfv(GL_LIGHT2, GL_POSITION, position);
+
+    updateSpot();
+
+    glLightf(GL_LIGHT2, GL_SPOT_EXPONENT, 15.0f);
+
+    glLightf(GL_LIGHT2, GL_CONSTANT_ATTENUATION, 1.0f);
+    glLightf(GL_LIGHT2, GL_LINEAR_ATTENUATION, 0.0f);
+    glLightf(GL_LIGHT2, GL_QUADRATIC_ATTENUATION, 0.0f);
+}
+
+void updateSpot() {
+    float direction[] = {-1, -1, -1};
+
+    glLightfv(GL_LIGHT2, GL_SPOT_DIRECTION, direction);
+    // glLightf(GL_LIGHT2, GL_SPOT_CUTOFF, spotCutoff);
 }
 
 void renderFrame() {
@@ -386,6 +408,7 @@ void initGame() {
 
     initLighting();
     initDirLighting();
+    initSpot();
     initAsteroidVertices();
     initSkyboxVertices();
     initSkyboxTextures();
