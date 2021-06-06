@@ -426,6 +426,7 @@ void initGame() {
     initDirLighting();
     initSpot();
     initAsteroidVertices();
+    initAsteroidTextures();
     initSkyboxVertices();
     initSkyboxTextures();
     initSkyboxTexcoords();

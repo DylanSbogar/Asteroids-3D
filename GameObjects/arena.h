@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include "../Handlers/stb_image.h"
 #include "../Managers/cameraManager.h"
 #include "../Handlers/mathHandler.h"
 #include "../Handlers/global.h"

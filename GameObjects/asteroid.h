@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
+
 #include "../Handlers/mathHandler.h"
 #include "../Handlers/global.h"
 #include "arena.h"
@@ -32,6 +33,8 @@ typedef struct {
     bool activated; // Is set to true when the asteroid enters the arena.
     bool alive;
 } asteroid;
+
+void initAsteroidTextures();
 
 void initAsteroidVertices();
 

@@ -43,11 +43,10 @@ void moveParticle(particle *particle, float deltaTime) {
 
 void drawParticle(particle *particle) {
     glPushMatrix();
-        // Brass
-        float matAmbient[] ={ 0.329412f, 0.223529f, 0.027451f,1.0f };
-        float matDiffuse[] ={ 0.780392f, 0.568627f, 0.113725f, 1.0f };
-        float matSpecular[] ={ 0.992157f, 0.941176f, 0.807843f, 1.0f };
-        float matShine[] = { 27.8974f };
+        float matAmbient[] ={0.0f,0.0f,0.0f,1.0f};
+        float matDiffuse[] ={0.55f,0.55f,0.55f,1.0f};
+        float matSpecular[] ={0.70f,0.70f,0.70f,1.0f };
+        float matShine[] = {32.0f} ;
 
         // setup materials
         glMaterialfv(GL_FRONT, GL_AMBIENT, matAmbient);

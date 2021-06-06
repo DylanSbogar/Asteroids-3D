@@ -1,8 +1,5 @@
 #include "arena.h"
 
-#define STB_IMAGE_IMPLEMENTATION
-#include "../Handlers/stb_image.h"
-
 float wallNormal[] = {0.1, 0.1, 0.1};
 float wallWarning[] = {0.3, 0.0, 0.0};
 
@@ -161,7 +158,7 @@ void initSkyboxTextures() {
 }
 
 void drawSkybox(camera *camera) {
-    // glDisable(GL_LIGHTING);
+    glDisable(GL_LIGHTING);
     float matAmbient[] = { 0.2, 0.2, 0.2, 1.0 };
     float matDiffuse[] = { 1.0, 1.0, 1.0, 1.0 };
     float matSpecular[] = { 1.0, 1.0, 1.0, 1.0 };
@@ -329,6 +326,7 @@ void drawSkybox(camera *camera) {
     glPopMatrix();
 
     glDisable(GL_TEXTURE_2D);
+    glEnable(GL_LIGHTING);
 }
 
 void drawAxes() {

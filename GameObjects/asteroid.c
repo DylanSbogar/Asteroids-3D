@@ -1,7 +1,28 @@
 #include "asteroid.h"
+#include "../Handlers/stb_image.h"
+
+GLuint asteroidTexture;
+
 
 vec3d asteroidVertices[ASTEROID_DIVISIONS + 1][ASTEROID_DIVISIONS + 1];
 int angle = 0;
+
+void initAsteroidTextures() {
+    int width, height, components;
+    unsigned char *data;
+
+    data = stbi_load("GameObjects/Assets/asteroid/asteroid.jpg", &width, &height, &components, STBI_rgb);
+    glPushAttrib(GL_TEXTURE_BIT);
+    glGenTextures(1, &asteroidTexture);
+    glBindTexture(GL_TEXTURE_2D, asteroidTexture);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+    free(data);
+    glPopAttrib();
+}
 
 void initAsteroidVertices() {
     // Initialise the sphere's vertices. (Adapted from tutorial 10 code.)
@@ -55,10 +76,10 @@ void initAsteroid(asteroid *asteroid, ship *ship) {
 
 void drawAsteroid(asteroid *asteroid) {
     // Brass
-    float matAmbient[] ={ 0.329412f, 0.223529f, 0.027451f,1.0f };
-    float matDiffuse[] ={ 0.780392f, 0.568627f, 0.113725f, 1.0f };
-    float matSpecular[] ={ 0.992157f, 0.941176f, 0.807843f, 1.0f };
-    float matShine[] = { 27.8974f };
+    float matAmbient[] ={0.0f,0.0f,0.0f,1.0f};
+    float matDiffuse[] ={0.55f,0.55f,0.55f,1.0f};
+    float matSpecular[] ={0.70f,0.70f,0.70f,1.0f };
+    float matShine[] = {32.0f} ;
 
     // setup materials
     glMaterialfv(GL_FRONT, GL_AMBIENT, matAmbient);
@@ -67,6 +88,8 @@ void drawAsteroid(asteroid *asteroid) {
     glMaterialfv(GL_FRONT, GL_SHININESS, matShine);
     
     // Drawing the asteroid.
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, asteroidTexture);
     glPushMatrix();
     glTranslatef(asteroid->pos.x, asteroid->pos.y, asteroid->pos.z);
     // Increase the angle at which the asteroid rotates.
@@ -86,6 +109,7 @@ void drawAsteroid(asteroid *asteroid) {
             glVertex3f(v1->x, v1->y, v1->z);
             glNormal3f(v2->x, v2->y, v2->z);
             glVertex3f(v2->x, v2->y, v2->z);
+            glTexCoord2f((float)i / (float)ASTEROID_DIVISIONS, (float)j / (float)ASTEROID_DIVISIONS);
         }
         glEnd();
     }

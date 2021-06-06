@@ -2,6 +2,7 @@
 #define MAIN_H
 
 #define TINYOBJ_LOADER_C_IMPLEMENTATION
+#define STB_IMAGE_IMPLEMENTATION
 #include "Handlers/tinyobj_loader_c.h"
 #include <float.h>
 #include <limits.h>
