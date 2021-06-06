@@ -248,6 +248,10 @@ void updateGameState(camera *camera, ship *ship, float deltaTime) {
             restartGame();
         }
 
+        if(asteroids[j].alive) {
+            roundOver = false;
+        }
+
         // If all asteroids are dead and the round is over.
         if(roundOver) {
             if(roundOverTime == 0) {
