@@ -3,7 +3,6 @@
 
 GLuint asteroidTexture;
 
-
 vec3d asteroidVertices[ASTEROID_DIVISIONS + 1][ASTEROID_DIVISIONS + 1];
 int angle = 0;
 
@@ -72,6 +71,8 @@ void initAsteroid(asteroid *asteroid, ship *ship) {
     asteroid->rotate.x = rand() % (1 + 1 - 0) + 0;
     asteroid->rotate.y = rand() % (1 + 1 - 0) + 0;
     asteroid->rotate.z = rand() % (1 + 1 - 0) + 0;
+
+    asteroid->hp = asteroid->size * ASTEROID_HP_MULTIPLIER;
 }
 
 void drawAsteroid(asteroid *asteroid) {

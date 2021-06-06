@@ -232,9 +232,16 @@ void updateGameState(camera *camera, ship *ship, float deltaTime) {
         
         for(int k = 0; k < MAX_BULLETS; k++) {
             // Check whether a bullet has destroyed any of the asteroids.
-           if(bulletAsteroidCollision(&bullets[k], &asteroids[j]) && player.alive) {
-               for(int deez = 0; deez < PARTICLE_AMT; deez++) {
-                   launchParticle(&particles[deez], asteroids[j].pos, asteroids[j].dir);
+           if(bulletAsteroidCollision(&bullets[k], &asteroids[j])) {
+                bullets[k].activated = false;
+                asteroids[j].hp--;
+
+                if(asteroids[j].hp <= 0) {
+                    asteroids[j].alive = false;
+
+                    for(int deez = 0; deez < PARTICLE_AMT; deez++) {
+                        launchParticle(&particles[deez], asteroids[j].pos, asteroids[j].dir);
+                    }
                }
            }
         }

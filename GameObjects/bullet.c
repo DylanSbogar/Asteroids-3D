@@ -67,8 +67,6 @@ bool bulletAsteroidCollision(bullet *bullet, asteroid *asteroid) {
     // Ensure the asteroid is activated, i.e. fully entered the arena in the case of larger asteroids.
     if(asteroid->activated && bullet->activated) {
         if(length < asteroid->size + SHIP_LENGTH) {
-            asteroid->alive = false;
-            bullet->activated = false;
             return true;
         } else {
             return false;

@@ -32,6 +32,7 @@ typedef struct {
     float velocity;
     bool activated; // Is set to true when the asteroid enters the arena.
     bool alive;
+    float hp;
 } asteroid;
 
 void initAsteroidTextures();
