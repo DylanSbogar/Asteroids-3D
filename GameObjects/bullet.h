@@ -44,4 +44,4 @@ void moveBullet(bullet *bullet, float deltaTime);
 
 void bulletCollision(bullet *bullet);
 
-void bulletAsteroidCollision(bullet *bullet, asteroid *asteroid);
+bool bulletAsteroidCollision(bullet *bullet, asteroid *asteroid);

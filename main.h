@@ -18,6 +18,7 @@
 
 #include "CoreGraphics/CoreGraphics.h"
 #include "Managers/cameraManager.h"
+#include "GameObjects/particle.h"
 #include "GameObjects/asteroid.h"
 #include "GameObjects/bullet.h"
 #include "GameObjects/arena.h"

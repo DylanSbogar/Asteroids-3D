@@ -59,7 +59,7 @@ void bulletCollision(bullet *bullet) {
     }
 }
 
-void bulletAsteroidCollision(bullet *bullet, asteroid *asteroid) {
+bool bulletAsteroidCollision(bullet *bullet, asteroid *asteroid) {
     // Get the distance between the bullet and the asteroid.
     vec3d result = distanceBetweenPoints(bullet->pos, asteroid->pos);
     float length = PYTHAGORAS(result.x, result.y, result.z);
@@ -69,6 +69,11 @@ void bulletAsteroidCollision(bullet *bullet, asteroid *asteroid) {
         if(length < asteroid->size + SHIP_LENGTH) {
             asteroid->alive = false;
             bullet->activated = false;
+            return true;
+        } else {
+            return false;
         }
+    } else {
+        return false;
     }
 }

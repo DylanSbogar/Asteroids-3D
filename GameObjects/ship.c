@@ -13,6 +13,8 @@ void initShip(ship *ship) {
     ship->velocity = SHIP_VELOCITY;
 
     ship->size = SHIP_LENGTH;
+
+    ship->alive = true;
 }
 
 void drawShip(const DrawObject* drawObject, ship *ship, float yaw, float roll, float pitch) {
