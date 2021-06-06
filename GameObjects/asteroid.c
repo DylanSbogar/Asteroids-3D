@@ -8,12 +8,12 @@ void initAsteroidVertices() {
     const float r = 1.0;
     float theta, phi;
     vec3d vertex;
-    float step_theta = 2.0 * M_PI / ASTEROID_DIVISIONS;
-    float step_phi = M_PI / ASTEROID_DIVISIONS;
+    float stepTheta = 2.0 * M_PI / ASTEROID_DIVISIONS;
+    float stepPhi = M_PI / ASTEROID_DIVISIONS;
     phi = 0;
-    for (int j = 0; j <= ASTEROID_DIVISIONS; j++, phi += step_phi) {
+    for (int j = 0; j <= ASTEROID_DIVISIONS; j++, phi += stepPhi) {
         theta = 0;
-        for (int i = 0; i <= ASTEROID_DIVISIONS; i++, theta += step_theta) {
+        for (int i = 0; i <= ASTEROID_DIVISIONS; i++, theta += stepTheta) {
             vertex.x = r * sinf(phi) * cosf(theta);
             vertex.y = r * cosf(phi);
             vertex.z = r * sinf(phi) * sinf(theta);

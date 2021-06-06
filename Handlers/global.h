@@ -1,6 +1,8 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
+#define TIME_BETWEEN_ROUNDS 5
+
 #define CAM_DEFAULT_ZOOM 15
 #define CAM_MIN_ZOOM 10
 #define CAM_MAX_ZOOM 30

@@ -74,6 +74,12 @@ void onMouseMove(int x, int y);
 
 void initLighting();
 
+void initDirLighting();
+
+int getTime();
+
+void setRestartTime();
+
 // MODEL LOADING BELOW HERE
 
 static void CalcNormal(float N[3], float v0[3], float v1[3], float v2[3]);

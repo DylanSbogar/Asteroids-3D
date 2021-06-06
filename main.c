@@ -9,6 +9,8 @@ int roundNum = 0;
 
 int currentTime = 0;
 float previousTime = 0.0;
+float roundOverTime = 0;
+int timeOnDeath = 0;
 
 bool firstMouse = true;
 bool gameOver = false;
@@ -64,6 +66,19 @@ void initLighting() {
     glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
     glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
     glEnable(GL_LIGHT0);
+}
+
+void initDirLighting() {
+    float noAmbient[] = {0.0f, 0.0f, 0.0f, 1.0f};
+    float whiteDiffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
+    float position[] = {ARENA_RADIUS, ARENA_RADIUS, ARENA_RADIUS, 0.0f};
+    float direction[] = {-1, -1, -1};
+
+    glLightfv(GL_LIGHT1, GL_AMBIENT, noAmbient);
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, whiteDiffuse);
+    glLightfv(GL_LIGHT1, GL_POSITION, position);
+    glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, direction);
+    glEnable(GL_LIGHT1);
 }
 
 void renderFrame() {
@@ -204,14 +219,19 @@ void updateGameState(camera *camera, ship *ship, float deltaTime) {
 
     // If all asteroids are dead and the round is over.
     if(roundOver) {
-        roundNum++;
+        if(roundOverTime == 0) {
+            roundOverTime = getTime();
+        }
 
-        // TODO: Wait 5 seconds before starting the next wave.
+        if(roundOverTime + TIME_BETWEEN_ROUNDS < getTime()) {
+            roundOverTime = 0;
+            roundNum++;
 
-        // Create x amount of new asteroids corresponding with the round number.
-        for(int ast = 0; ast < roundNum; ast++)
-        {
-            initAsteroid(&asteroids[ast], &player);
+            // Create x amount of new asteroids corresponding with the round number.
+            for(int ast = 0; ast < roundNum; ast++)
+            {
+                initAsteroid(&asteroids[ast], &player);
+            }
         }
     }
 }
@@ -333,6 +353,7 @@ void restartGame() {
     for(int ast = 0; ast < roundNum; ast++) {
         initAsteroid(&asteroids[ast], &player);
     }
+    setRestartTime();
 }
 
 void initKeyHandler() {
@@ -364,6 +385,7 @@ void initGame() {
     glutIdleFunc(onIdle);
 
     initLighting();
+    initDirLighting();
     initAsteroidVertices();
     initSkyboxVertices();
     initSkyboxTextures();
@@ -374,9 +396,16 @@ void initGame() {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_NORMALIZE);
 
-
     // Hide the cursor on screen.
     glutSetCursor(GLUT_CURSOR_NONE);
+}
+
+int getTime() {
+    return (glutGet(GLUT_ELAPSED_TIME) / 1000) - timeOnDeath;
+}
+
+void setRestartTime() {
+    timeOnDeath += getTime();
 }
 
 int main(int argc, char **argv) {
@@ -388,7 +417,6 @@ int main(int argc, char **argv) {
     glutInit(&argc, argv);
     initGame();
 
-    // PUT OBJLOADER HERE
     float bmin[3], bmax[3];
     float maxExtent;
     if (0 == LoadObjAndConvert(bmin, bmax, argv[1])) {
