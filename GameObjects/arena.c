@@ -180,7 +180,7 @@ void drawSkybox(camera *camera) {
     glPushMatrix();
     glTranslatef(camera->pos.x + 1, camera->pos.y, camera->pos.z);
     glRotatef(270, 0.0, 1.0, 0.0);
-    glRotatef(180, 0,0,1);
+    glRotatef(180, 0, 1, 0);
     glBegin(GL_QUADS);
     glNormal3f(0, 0, 1);
     for (int row=0; row<SKYBOX_SEGMENTS; row++) {
@@ -256,7 +256,7 @@ void drawSkybox(camera *camera) {
     glBindTexture(GL_TEXTURE_2D, skyboxBack);
     glPushMatrix();
     glTranslatef(camera->pos.x, camera->pos.y, camera->pos.z - 1);
-    // glRotatef(, 0, 0, 1);
+    glRotatef(180, 0, 1, 0);
     glBegin(GL_QUADS);
     glNormal3f(0, 0, 1);
     for (int row=0; row<SKYBOX_SEGMENTS; row++) {
@@ -307,7 +307,7 @@ void drawSkybox(camera *camera) {
     glPushMatrix();
     glTranslatef(camera->pos.x, camera->pos.y - 1, camera->pos.z);
     glRotatef(270, 1.0, 0.0, 0.0);
-    glRotatef(180, 0, 0, 1);
+    glRotatef(180, 0, 1, 0);
     glBegin(GL_QUADS);
     glNormal3f(0, 0, 1);
     for (int row=0; row<SKYBOX_SEGMENTS; row++) {
