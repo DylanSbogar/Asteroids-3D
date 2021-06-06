@@ -109,7 +109,7 @@ void drawAsteroid(asteroid *asteroid) {
             glVertex3f(v1->x, v1->y, v1->z);
             glNormal3f(v2->x, v2->y, v2->z);
             glVertex3f(v2->x, v2->y, v2->z);
-            glTexCoord2f((float)i / (float)ASTEROID_DIVISIONS, (float)j / (float)ASTEROID_DIVISIONS);
+            glTexCoord2f((float)j / (float)ASTEROID_DIVISIONS, (float)i / (float)ASTEROID_DIVISIONS);
         }
         glEnd();
     }
