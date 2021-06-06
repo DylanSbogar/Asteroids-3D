@@ -195,6 +195,10 @@ void updateGameState(camera *camera, ship *ship, float deltaTime) {
 
     // If the ship collides with an arena wall.
     if(shipCollision(&player)) {
+        for(int deez = 0; deez < PARTICLE_AMT; deez++) {
+            player.alive = false;
+            launchParticle(&particles[deez], player.pos, player.dir);
+        }
         restartGame();
     }
     
